@@ -30,6 +30,8 @@ members = [
 
     "pallas",
     "vesta",
+
+    "secp256k1",
 ]
 
 [profile.release]
