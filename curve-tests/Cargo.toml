@@ -22,9 +22,9 @@ edition = "2018"
 
 [dependencies]
 ark-std = { git = "https://github.com/arkworks-rs/utils", default-features = false }
-ark-serialize = { git = "https://github.com/arkworks-rs/algebra", default-features = false }
-ark-ff = { git = "https://github.com/arkworks-rs/algebra", default-features = false }
-ark-ec = { git = "https://github.com/arkworks-rs/algebra", default-features = false }
+ark-serialize = { path = "../../algebra/serialize", default-features = false }
+ark-ff = { path = "../../algebra/ff", default-features = false }
+ark-ec = { path = "../../algebra/ec", default-features = false }
 rand = { version = "0.7", default-features = false}
 rand_xorshift = { version = "0.2", default-features = false}
 

@@ -1,13 +1,13 @@
 use ark_ff::{
-    biginteger::BigInteger256 as BigInteger,
-    fields::{FftParameters, Fp256, Fp256Parameters},
+    biginteger::BigInteger320 as BigInteger,
+    fields::{FftParameters, Fp320, Fp320Parameters},
 };
 
-pub type Fq = Fp256<FqParameters>;
+pub type Fq = Fp320<FqParameters>;
 
 pub struct FqParameters;
 
-impl Fp256Parameters for FqParameters {}
+impl Fp320Parameters for FqParameters {}
 impl FftParameters for FqParameters {
     type BigInt = BigInteger;
 
@@ -15,12 +15,13 @@ impl FftParameters for FqParameters {
 
     // TWO_ADIC_ROOT_OF_UNITY = GENERATOR^T
     // Encoded in Montgomery form, so the value here is (5^T)R mod p.
-    // 115792089237316195423570985008687907853269984665640564039457584007904539703390
+    // 115792089237316195423570985008687907853269984665561335858920850710301058792495
     const TWO_ADIC_ROOT_OF_UNITY: BigInteger = BigInteger([
-        0xfffffffdfffff85e,
+        0xfffffffefffffc2f,
+        0xfffffffefffffc2e,
         0xffffffffffffffff,
         0xffffffffffffffff,
-        0xffffffffffffffff,
+        0x0,
     ]);
 }
 
@@ -31,21 +32,24 @@ impl ark_ff::fields::FpParameters for FqParameters {
         0xffffffffffffffff,
         0xffffffffffffffff,
         0xffffffffffffffff,
+        0x0,
     ]);
 
-    // R = 2^256 mod p
+    // R = 2^320 mod p = 79228180536733297607775879168
     const R: BigInteger = BigInteger([
+        0x0,
         0x1000003d1,
         0x0,
         0x0,
         0x0,
     ]);
 
-    // R2 = (2^256)^2 mod p
+    // R2 = (2^320)^2 mod p = 18446752466076602529
     const R2: BigInteger = BigInteger([
+        0x0,
+        0x0,
         0x7a2000e90a1,
         0x1,
-        0x0,
         0x0,
     ]);
 
@@ -55,6 +59,7 @@ impl ark_ff::fields::FpParameters for FqParameters {
         0xffffffffffffffff,
         0xffffffffffffffff,
         0x7fffffffffffffff,
+        0x0,
     ]);
 
     // T and T_MINUS_ONE_DIV_TWO, where MODULUS - 1 = 2^S * T
@@ -65,6 +70,7 @@ impl ark_ff::fields::FpParameters for FqParameters {
         0xffffffffffffffff,
         0xffffffffffffffff,
         0x7fffffffffffffff,
+        0x0,
     ]);
 
     // (T - 1) / 2 = 28948022309329048855892746252171976963317496166410141009864396001977208667915
@@ -73,11 +79,13 @@ impl ark_ff::fields::FpParameters for FqParameters {
         0xffffffffffffffff,
         0xffffffffffffffff,
         0x3fffffffffffffff,
+        0x0,
     ]);
 
     // GENERATOR = 5
     // Encoded in Montgomery form, so the value here is 5R mod p.
     const GENERATOR: BigInteger = BigInteger([
+        0x0,
         0x500001315,
         0x0,
         0x0,
