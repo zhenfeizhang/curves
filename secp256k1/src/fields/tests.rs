@@ -11,8 +11,8 @@ fn test_fr() {
     let a: Fr = rng.gen();
     let b: Fr = rng.gen();
     field_test(a, b);
-    //sqrt_field_test(a);
-    //primefield_test::<Fr>();
+    sqrt_field_test(a);
+    primefield_test::<Fr>();
 }
 
 #[test]
