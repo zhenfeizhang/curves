@@ -97,7 +97,7 @@ impl FpParameters for FrParameters {
 
     const CAPACITY: u32 = Self::MODULUS_BITS - 1;
 
-    const REPR_SHAVE_BITS: u32 = 1;
+    const REPR_SHAVE_BITS: u32 = 64;
 
     // INV = -q^{-1} (mod 2^64)
     const INV: u64 = 5408259542528602431;

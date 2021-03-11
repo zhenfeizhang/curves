@@ -96,7 +96,7 @@ impl ark_ff::fields::FpParameters for FqParameters {
 
     const CAPACITY: u32 = Self::MODULUS_BITS - 1;
 
-    const REPR_SHAVE_BITS: u32 = 1;
+    const REPR_SHAVE_BITS: u32 = 64;
 
     // INV = -p^{-1} (mod 2^64)
     const INV: u64 = 15580212934572586289;
