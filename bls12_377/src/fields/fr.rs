@@ -1,4 +1,4 @@
-/// ! Bls12-377 scalar field.
+//! Bls12-377 scalar field.
 ///
 /// Roots of unity computed from modulus and R using this sage code:
 ///
