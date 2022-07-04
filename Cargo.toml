@@ -14,6 +14,7 @@ members = [
     "ed_on_cp6_782",
 
     "bls12_381",
+    "bls12_381_new",
     "ed_on_bls12_381",
 
     "bn254",
