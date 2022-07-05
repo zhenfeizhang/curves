@@ -113,3 +113,15 @@ print("T")
 print64(trace)
 print("T_MINUS_ONE_DIV_TWO")
 print64((trace-1)//2)
+
+
+x0 = Fp(0)
+cof = E.order()//r
+P = E(0)
+while P.is_zero():
+    x0+=1
+    while not((x0**3 + 1).is_square()):
+        x0+=1
+    P = cof * E.lift_x(x0)
+print(P[0])
+print(-P[1])

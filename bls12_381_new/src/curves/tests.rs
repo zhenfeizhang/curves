@@ -92,18 +92,11 @@ fn test_g1_generator_raw() {
     let mut x = Fq::zero();
     let mut i = 0;
     loop {
-        println!("1");
         // y^2 = x^3 + b
         let mut rhs = x;
-        println!("2");
         rhs.square_in_place();
-        println!("3");
         rhs.mul_assign(&x);
-        println!("4");
         rhs.add_assign(&g1::Parameters::COEFF_B);
-        println!("5");
-        println!("{}", rhs.sqrt().unwrap());
-        println!("bbb");
 
         if let Some(y) = rhs.sqrt() {
             let p = G1Affine::new(x, if y < -y { y } else { -y }, false);
@@ -111,7 +104,7 @@ fn test_g1_generator_raw() {
 
             let g1 = p.scale_by_cofactor();
             if !g1.is_zero() {
-                assert_eq!(i, 4);
+                assert_eq!(i, 1);
                 let g1 = G1Affine::from(g1);
 
                 assert!(g1.is_in_correct_subgroup_assuming_on_curve());
