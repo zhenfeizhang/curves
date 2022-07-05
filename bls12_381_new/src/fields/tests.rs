@@ -1,13 +1,12 @@
 #![allow(unused)]
+use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters, FqParameters, Fr, Parameters};
+use ark_algebra_test_templates::fields::*;
 use ark_ff::{
     fields::{Field, Fp12Parameters, Fp6Parameters, SquareRootField},
-    One, UniformRand, Zero, BigInteger384, FpParameters,
+    BigInteger384, FpParameters, One, UniformRand, Zero,
 };
 use core::ops::MulAssign;
-use std::{ops::AddAssign, cmp::Ordering};
-use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters,
-Fr, Parameters, FqParameters};
-use ark_algebra_test_templates::fields::*;
+use std::{cmp::Ordering, ops::AddAssign};
 
 pub(crate) const ITERATIONS: usize = 5;
 

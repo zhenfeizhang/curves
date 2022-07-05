@@ -1,8 +1,10 @@
 #![allow(unused_imports)]
-use ark_ec::{models::SWModelParameters, AffineCurve, PairingEngine, ProjectiveCurve, bls12::Bls12Parameters};
+use ark_ec::{
+    bls12::Bls12Parameters, models::SWModelParameters, AffineCurve, PairingEngine, ProjectiveCurve,
+};
 use ark_ff::{
     fields::{Field, FpParameters, PrimeField, SquareRootField},
-    One, Zero, UniformRand,
+    One, UniformRand, Zero,
 };
 use ark_serialize::CanonicalSerialize;
 use ark_std::{rand::Rng, test_rng};
