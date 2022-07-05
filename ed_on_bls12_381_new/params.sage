@@ -71,7 +71,7 @@ Aw = Fp(401348105352140155624260851327639022691069668345527112901003141264756155
 Bw = Fp(175774110750)
 E  = EllipticCurve([Aw,Bw])
 assert E.order() % r == 0
-P = 36 * E.random_point()
+P = 36*E.random_point()
 assert not(P.is_zero())
 
 # Montgomery

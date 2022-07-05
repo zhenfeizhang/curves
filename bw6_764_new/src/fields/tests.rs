@@ -8,7 +8,7 @@ use ark_algebra_test_templates::fields::*;
 
 #[test]
 fn test_sqrt() {
-    let a: Fr = Fr::from(4);
+    let a: Fq = Fq::from(4);
     let _sqrt_a = a.sqrt().unwrap();
 }
 
