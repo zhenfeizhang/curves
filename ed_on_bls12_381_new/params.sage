@@ -77,9 +77,12 @@ assert not(P.is_zero())
 # Montgomery
 α = E.division_polynomial(2).roots()[0][0]
 Fpx.<x> = Fp[]
-s = 1/(x**2-(3*α**2+Aw)).roots()[0][0]
+s = 1/(x**2-(3*α**2+Aw)).roots()[1][0]
 Am = 3*α*s
 Bm = s
+
+assert Aw == (3-Am**2) / (3*Bm**2)
+assert Bw == (2*Am**3 - 9*Am) / (27*Bm**3)
 
 [u,v] = [s*(P[0] - α), s*P[1]]
 assert Bm * v**2 == u**3 + Am*u**2 + u
@@ -99,19 +102,23 @@ while β.is_square():
     boo = not(boo)
 # β = Fp(5)
 
-# isomorphism (sqrt(ate0/5)x, y)
-Ate = 5*Ate0/Ate0
-Dte = 5*Dte0/Ate0
-xte = xte0 *sqrt(Ate0/5)
+# isomorphism (sqrt(Ate0/-5)x, y)
+Ate = β*Ate0/Ate0
+Dte = β*Dte0/Ate0
+xte = xte0 *sqrt(Ate0/β)
 yte = yte0
 assert Ate * xte**2 + yte**2 == 1 + Dte*xte**2*yte**2
+
+new_Am = 2*(Ate + Dte) / (Ate - Dte)
+new_Bm = 4 / (Ate-Dte)
+
 print("TE COEFFICIENTS")
 print(Ate)
 print(Dte)
 
 print("MONTGOMERY COEFFICIENTS")
-print(Am)
-print(Bm)
+print(new_Am)
+print(new_Bm)
 
 cof = 36
 cof_inv = Fr(36)**-1
