@@ -36,17 +36,17 @@ generator = Fp(2)
 two_adicity = valuation(p - 1, 2);
 trace = (p - 1) / 2**two_adicity;
 two_adic_root_of_unity = generator^trace
-print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
-print("TWOADICROOTOFUNITY")
-print64(two_adic_root_of_unity)
-print("MODULUS")
-print64(p)
-print("MODULUSBITS")
-print(p.nbits())
 M = 1<<64
 while M < p :
     M *= 1<<64
 R = Fp(M)
+print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
+print("TWOADICROOTOFUNITY")
+print64(two_adic_root_of_unity*R%p)
+print("MODULUS")
+print64(p)
+print("MODULUSBITS")
+print(p.nbits())
 print("R")
 print64(R)
 print("R2")

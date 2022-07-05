@@ -14,11 +14,13 @@ impl FftParameters for FrParameters {
     const TWO_ADICITY: u32 = 3;
 
     #[rustfmt::skip]
+    // 2^3-th root of unity = GENERATOR ^ T =
+    // 29180994090598693311887686510943151134939632683795886146282286790774607395
     const TWO_ADIC_ROOT_OF_UNITY: BigInteger = BigInteger([
-        0x122e33eb18afce23,
-        0xe7c9d224a7fe0668,
-        0xdb89145ad85fa08a,
-        0x10840f3a46a122,
+        0x774dab031cfccc72,
+        0x34fefb80d7f23bde,
+        0x3497dcc3ceccba84,
+        0x68a2e2520ae6c9,
     ]);
 }
 impl FpParameters for FrParameters {

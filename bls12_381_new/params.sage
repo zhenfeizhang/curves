@@ -1,6 +1,3 @@
-from re import I
-
-
 p = 2680159072491083434851704741251836777263822501214542753513157466943449604067937977626421502422550778814509982154753
 r = 40134810535214015562426085132763902269106966834552711290100314126475667177473
 
@@ -39,37 +36,24 @@ def print64(x):
     print(']')
 
 # Fp
-generator = Fp(0);
-for i in range(0, 20):
-    i = Fp(i);
-    neg_i = Fp(-i)
-    if not(i.is_primitive_root() or neg_i.is_primitive_root()):
-        continue
-    elif i.is_primitive_root():
-        assert(i.is_primitive_root());
-        print("Generator: %d" % i)
-        generator = i
-        break
-    else:
-        assert(neg_i.is_primitive_root());
-        print("Generator: %d" % neg_i)
-        generator = neg_i
-        break
-
+g = Fp(1)
+while g.multiplicative_order() != p-1:
+    g +=1
 two_adicity = valuation(p - 1, 2);
 trace = (p - 1) / 2**two_adicity;
-two_adic_root_of_unity = generator^trace
-print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
-print("TWOADICROOTOFUNITY")
-print64(two_adic_root_of_unity)
-print("MODULUS")
-print64(p)
-print("MODULUSBITS")
-print(p.nbits())
+two_adic_root_of_unity = g^trace
 M = 1<<64
 while M < p :
     M *= 1<<64
 R = Fp(M)
+
+print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
+print("TWOADICROOTOFUNITY")
+print64(two_adic_root_of_unity*R%p)
+print("MODULUS")
+print64(p)
+print("MODULUSBITS")
+print(p.nbits())
 print("R")
 print64(R)
 print("R2")
@@ -77,14 +61,13 @@ print64(R**2)
 print("INV")
 print64(-Integers(1<<64)(p)**-1)
 print("GENERATOR")
-print64((10*R)%p)
+print64((int(g)*int(R))%p)
 print("MODULUS_MINUS_ONE_DIV_TWO")
 print64((p-1)//2)
 print("T")
-T = (p-1)//(1<<40)
-print64(T)
+print64(trace)
 print("T_MINUS_ONE_DIV_TWO")
-print64((T-1)//2)
+print64((trace-1)//2)
 
 # Fp6
 print("FROBENIUS_C1")
@@ -97,40 +80,36 @@ for j in range(6):
 # Fp12
 # todo
 
+print("\n\n\n\n\n\n\n\n")
 # Fr
 N = 1<<64
 while N < r:
     N *= 1<<64
 RR = GF(r)(N)
+two_adicity = valuation(r - 1, 2);
+trace = (r - 1) / 2**two_adicity;
+Fr = GF(r)
+generator = Fr(39415827777849273770726111108287440543547393994679752525064544064550880998990)
+two_adic_root_of_unity = generator^trace
+print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
+print("TWOADICROOTOFUNITY")
+print64(two_adic_root_of_unity*RR%r)
+print("MODULUS")
+print64(r)
 print("R")
 print64(RR)
 print("R2")
 print64(RR**2)
 print("INV")
 print64(-Integers(1<<64)(r)**-1)
-Fr = GF(r)
-generator = Fr(0);
-for i in range(0, 20):
-    i = Fr(i);
-    neg_i = Fr(-i)
-    if not(i.is_primitive_root() or neg_i.is_primitive_root()):
-        continue
-    elif i.is_primitive_root():
-        assert(i.is_primitive_root());
-        print("Generator: %d" % i)
-        generator = i
-        break
-    else:
-        assert(neg_i.is_primitive_root());
-        print("Generator: %d" % neg_i)
-        generator = neg_i
-        break
 print("GENERATOR")
-print64((11*RR)%r)
+g = Fr(1)
+while g.multiplicative_order()!=r-1:
+    g+=1
+print64((int(g)*int(RR))%r)
 print("MODULUS_MINUS_ONE_DIV_TWO")
 print64((r-1)//2)
 print("T")
-T = (r-1)//(1<<41)
-print64(T)
+print64(trace)
 print("T_MINUS_ONE_DIV_TWO")
-print64((T-1)//2)
+print64((trace-1)//2)

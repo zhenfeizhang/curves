@@ -1,20 +1,23 @@
 use ark_ff::{
-    biginteger::{BigInteger, BigInteger384},
-    fields::{
-        FftField, FftParameters, Field, Fp12Parameters, Fp2Parameters, Fp6Parameters, FpParameters,
-        SquareRootField,
-    },
+    fields::{Field, Fp12Parameters, Fp6Parameters, SquareRootField},
     One, UniformRand, Zero,
 };
-use core::{
-    cmp::Ordering,
-    ops::{AddAssign, MulAssign, SubAssign},
-};
+use core::ops::MulAssign;
 
-use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq2Parameters, Fq6, Fq6Parameters, FqParameters, Fr};
+// use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq2Parameters, Fq6, Fq6Parameters,
+// FqParameters, Fr};
+use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters, Fr};
 use ark_algebra_test_templates::fields::*;
 
 pub(crate) const ITERATIONS: usize = 5;
+
+#[test]
+fn test_sqrt() {
+    let mut rng = ark_std::test_rng();
+    let a: Fr = UniformRand::rand(&mut rng);
+    let _sqrt_a = a.sqrt().unwrap();
+    assert_eq!(a, a);
+}
 
 #[test]
 fn test_fr() {

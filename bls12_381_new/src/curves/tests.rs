@@ -92,11 +92,18 @@ fn test_g1_generator_raw() {
     let mut x = Fq::zero();
     let mut i = 0;
     loop {
+        println!("1");
         // y^2 = x^3 + b
         let mut rhs = x;
+        println!("2");
         rhs.square_in_place();
+        println!("3");
         rhs.mul_assign(&x);
+        println!("4");
         rhs.add_assign(&g1::Parameters::COEFF_B);
+        println!("5");
+        println!("{}", rhs.sqrt().unwrap());
+        println!("bbb");
 
         if let Some(y) = rhs.sqrt() {
             let p = G1Affine::new(x, if y < -y { y } else { -y }, false);

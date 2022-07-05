@@ -16,12 +16,12 @@ impl FftParameters for FqParameters {
 
     #[rustfmt::skip]
     const TWO_ADIC_ROOT_OF_UNITY: BigInteger = BigInteger([
-            0x5880362220b84861,
-            0x4bbd0863f45e2f5a,
-            0x567955d27df9ef11,
-            0xba116084ee9312a1,
-            0xbbd0755e36ce3a39,
-            0x7cb263c5a186e35,
+        0xfe595c6422d3a270,
+        0x8fd903ac53a591dc,
+        0x9e367cf3f281e180,
+        0xbe92b4984de2a2e0,
+        0xb2ebf4df1ce81439,
+        0x450da640ae9e8c0,
     ]);
 }
 impl FpParameters for FqParameters {
@@ -65,17 +65,17 @@ impl FpParameters for FqParameters {
 
     const INV: u64 = 0xc46d3cffffffffff;
 
-    /// GENERATOR = 10
+    /// GENERATOR = ??
     /// Encoded in Montgomery form,so the value is
-    /// 10 * R % q = ?
+    /// ? * R % q = ?
     #[rustfmt::skip]
     const GENERATOR: BigInteger = BigInteger([
-        0x3545f8ffffffff6d,
-        0xfce2cb0ae5c6ff8f,
-        0x53847a0cabe394d9,
-        0xdd017de7c44ae599,
-        0xa3b45abdf6f91148,
-        0x3d0179e4755d8c,
+        0x7730d71524c1f7d1,
+        0xf0afdb7b15fbc8be,
+        0x2092ef0f63ca8dd0,
+        0x12e175a3783dedb1,
+        0x1bda12e782b54d82,
+        0x1ef96b691abfb5,
     ]);
 
     #[rustfmt::skip]

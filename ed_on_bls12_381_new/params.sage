@@ -30,22 +30,25 @@ Fr = GF(r)
 #         print("Generator: %d" % neg_i)
 #         generator = neg_i
 #         break
-generator = Fr(10)
+
+g = Fr(10)
+while g.multiplicative_order() != r-1:
+    g += 1
 
 two_adicity = valuation(r - 1, 2);
 trace = (r - 1) / 2**two_adicity;
-two_adic_root_of_unity = generator^trace
-print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
-print("TWOADICROOTOFUNITY")
-print64(two_adic_root_of_unity)
-print("MODULUS")
-print64(r)
-print("MODULUSBITS")
-print(r.nbits())
+two_adic_root_of_unity = g**trace
 M = 1<<64
 while M < r :
     M *= 1<<64
 R = Fr(M)
+print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
+print("TWOADICROOTOFUNITY")
+print64(two_adic_root_of_unity*R%r)
+print("MODULUS")
+print64(r)
+print("MODULUSBITS")
+print(r.nbits())
 print("R")
 print64(R)
 print("R2")
@@ -53,7 +56,7 @@ print64(R**2)
 print("INV")
 print64(-Integers(1<<64)(r)**-1)
 print("GENERATOR")
-print64((generator*R)%r)
+print64((int(g)*int(R))%r)
 print("MODULUS_MINUS_ONE_DIV_TWO")
 print64((r-1)//2)
 print("T")

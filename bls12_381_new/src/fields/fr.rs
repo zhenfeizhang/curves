@@ -11,14 +11,14 @@ impl Fp256Parameters for FrParameters {}
 impl FftParameters for FrParameters {
     type BigInt = BigInteger;
 
-    const TWO_ADICITY: u32 = 32;
+    const TWO_ADICITY: u32 = 41;
 
     #[rustfmt::skip]
     const TWO_ADIC_ROOT_OF_UNITY: BigInteger = BigInteger([
-        0xb9b58d8c5f0e466a,
-        0x5b1b4c801819d7ec,
-        0xaf53ae352a31e64,
-        0x5bf3adda19e9b27b,
+        0xa9a51ba0b1d60086,
+        0xceb908169c7a86d3,
+        0x9d1a8cb15f5fc816,
+        0x278e5147b0b54d7a,
     ]);
 }
 impl FpParameters for FrParameters {
@@ -55,10 +55,9 @@ impl FpParameters for FrParameters {
 
     const INV: u64 = 0x88da79ffffffffff;
 
-    /// GENERATOR = 11
+    /// GENERATOR = ?
     /// Encoded in Montgomery form,so the value here is
-    /// 11 * R % q =
-    /// 29533855018843667224072195979886016043653859450912154440923686166298743537633
+    /// ? * R % q = ?
     #[rustfmt::skip]
     const GENERATOR: BigInteger = BigInteger([
         0x6d8b39ffffffffe1,
