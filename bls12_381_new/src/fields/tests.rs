@@ -1,12 +1,11 @@
+#![allow(unused)]
 use ark_ff::{
     fields::{Field, Fp12Parameters, Fp6Parameters, SquareRootField},
     One, UniformRand, Zero,
 };
 use core::ops::MulAssign;
-
-use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq2Parameters, Fq6, Fq6Parameters,
-FqParameters, Fr};
-use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters, Fr};
+use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters,
+Fr};
 use ark_algebra_test_templates::fields::*;
 
 pub(crate) const ITERATIONS: usize = 5;
@@ -2223,7 +2222,7 @@ fn test_fq2_legendre() {
 
     assert_eq!(Zero, Fq2::zero().legendre());
     // i^2 = -1
-    let mut m1 = -Fq2::one();
+    let mut m1 = -Fq2::one().double().double() - Fq2::one();
     assert_eq!(QuadraticResidue, m1.legendre());
     m1 = Fq6Parameters::mul_fp2_by_nonresidue(&m1);
     assert_eq!(QuadraticNonResidue, m1.legendre());
@@ -2233,7 +2232,7 @@ fn test_fq2_legendre() {
 fn test_fq2_mul_nonresidue() {
     let mut rng = ark_std::test_rng();
 
-    let nqr = Fq2::new(Fq::one(), Fq::one());
+    let nqr = Fq2::new(Fq::from(3), Fq::from(2));
 
     for _ in 0..1000 {
         let mut a = Fq2::rand(&mut rng);

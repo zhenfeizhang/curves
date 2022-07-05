@@ -125,3 +125,30 @@ while P.is_zero():
     P = cof * E.lift_x(x0)
 print(P[0])
 print(-P[1])
+
+#params frobenius
+for k in range(6): 
+    T=((3+2*i)**((2*p**k-1)//3)).polynomial().list() 
+    if len(T) == 1: 
+        T+= [0] 
+    print(T[0]) 
+    print(T[1]) 
+    print() 
+     
+for k in range(6): 
+    T=((3+2*i)**((p**k-1)//3)).polynomial().list() 
+    if len(T) == 1: 
+        T+= [0] 
+    print(T[0]) 
+    print(T[1]) 
+    print() 
+
+for k in range(12):
+    print("\t// Fp2::NONRESIDUE^(((q^{}) - 1) / 6)".format(k))
+    T=((3+2*i)**((p**k-1)//6)).polynomial().list() 
+    if len(T) == 1: 
+        T+= [0] 
+    print("\tfield_new!(Fq2, fiend_new!(Fq, \"{}\"), field_new!(Fq, \"{}\"),),".format(
+        T[0],
+        T[1]
+    ))
