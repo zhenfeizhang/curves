@@ -1,8 +1,8 @@
 #![allow(unused_imports)]
-use ark_ec::{models::SWModelParameters, AffineCurve, PairingEngine, ProjectiveCurve};
+use ark_ec::{models::SWModelParameters, AffineCurve, PairingEngine, ProjectiveCurve, bls12::Bls12Parameters};
 use ark_ff::{
     fields::{Field, FpParameters, PrimeField, SquareRootField},
-    One, Zero,
+    One, Zero, UniformRand,
 };
 use ark_serialize::CanonicalSerialize;
 use ark_std::{rand::Rng, test_rng};
@@ -11,7 +11,7 @@ use core::ops::{AddAssign, MulAssign};
 use crate::{
     g1,
     g2::{self, Parameters},
-    Bls12_381, Fq, Fq12, Fq2, Fr, G1Affine, G1Projective, G2Affine, G2Projective,
+    Bls12_381New, Fq, Fq12, Fq2, Fr, G1Affine, G1Projective, G2Affine, G2Projective,
 };
 use ark_algebra_test_templates::{curves::*, groups::*};
 
@@ -71,9 +71,9 @@ fn test_bilinearity() {
     let mut sb = b;
     sb.mul_assign(s);
 
-    let ans1 = Bls12_381::pairing(sa, b);
-    let ans2 = Bls12_381::pairing(a, sb);
-    let ans3 = Bls12_381::pairing(a, b).pow(s.into_repr());
+    let ans1 = Bls12_381New::pairing(sa, b);
+    let ans2 = Bls12_381New::pairing(a, sb);
+    let ans3 = Bls12_381New::pairing(a, b).pow(s.into_repr());
 
     assert_eq!(ans1, ans2);
     assert_eq!(ans2, ans3);

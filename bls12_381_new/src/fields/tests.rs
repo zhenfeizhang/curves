@@ -5,7 +5,7 @@ use ark_ff::{
 };
 use core::ops::MulAssign;
 use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters,
-Fr};
+Fr, Parameters};
 use ark_algebra_test_templates::fields::*;
 
 pub(crate) const ITERATIONS: usize = 5;

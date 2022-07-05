@@ -1,3 +1,6 @@
+from re import I
+
+
 p = 2680159072491083434851704741251836777263822501214542753513157466943449604067937977626421502422550778814509982154753
 r = 40134810535214015562426085132763902269106966834552711290100314126475667177473
 
@@ -126,29 +129,47 @@ while P.is_zero():
 print(P[0])
 print(-P[1])
 
-#params frobenius
-for k in range(6): 
-    T=((3+2*i)**((2*p**k-1)//3)).polynomial().list() 
-    if len(T) == 1: 
-        T+= [0] 
-    print(T[0]) 
-    print(T[1]) 
-    print() 
-     
-for k in range(6): 
-    T=((3+2*i)**((p**k-1)//3)).polynomial().list() 
-    if len(T) == 1: 
-        T+= [0] 
-    print(T[0]) 
-    print(T[1]) 
-    print() 
+x1 = Fp2(0)
+boo = True
+cof2 = E2.order()//r
+Q = E2(0)
+while Q.is_zero():
+    if boo:
+        x1+=i
+    else:
+        x1+=1
+    boo = not(boo)
+    while not((x1**3+E2.a6()).is_square()):
+        if boo:
+            x1+=i
+        else:
+            x1+=1
+        boo = not(boo)
+        Q = cof2 * E2.lift_x(x1)
 
-for k in range(12):
-    print("\t// Fp2::NONRESIDUE^(((q^{}) - 1) / 6)".format(k))
-    T=((3+2*i)**((p**k-1)//6)).polynomial().list() 
-    if len(T) == 1: 
-        T+= [0] 
-    print("\tfield_new!(Fq2, fiend_new!(Fq, \"{}\"), field_new!(Fq, \"{}\"),),".format(
-        T[0],
-        T[1]
-    ))
+# #params frobenius
+# for k in range(6): 
+#     T=((3+2*i)**((2*p**k-1)//3)).polynomial().list() 
+#     if len(T) == 1: 
+#         T+= [0] 
+#     print(T[0]) 
+#     print(T[1]) 
+#     print() 
+     
+# for k in range(6): 
+#     T=((3+2*i)**((p**k-1)//3)).polynomial().list() 
+#     if len(T) == 1: 
+#         T+= [0] 
+#     print(T[0]) 
+#     print(T[1]) 
+#     print() 
+
+# for k in range(12):
+#     print("\t// Fp2::NONRESIDUE^(((q^{}) - 1) / 6)".format(k))
+#     T=((3+2*i)**((p**k-1)//6)).polynomial().list() 
+#     if len(T) == 1: 
+#         T+= [0] 
+#     print("\tfield_new!(Fq2, fiend_new!(Fq, \"{}\"), field_new!(Fq, \"{}\"),),".format(
+#         T[0],
+#         T[1]
+#     ))
