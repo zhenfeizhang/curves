@@ -1,4 +1,6 @@
-from re import I
+from re import I, U
+
+from pyrsistent import v
 
 
 p = 2680159072491083434851704741251836777263822501214542753513157466943449604067937977626421502422550778814509982154753
@@ -72,104 +74,66 @@ print64(trace)
 print("T_MINUS_ONE_DIV_TWO")
 print64((trace-1)//2)
 
-# Fp6
-print("FROBENIUS_C1")
-for j in range(6):
-    print((1+i)**((p**j-1)//3))
-print("FROBENIUS_C2")
-for j in range(6): 
-    print((1+i)**((2*p**j-1)//3))
+# Fp2
+print("FP2")
+α = Fp(-1)
+Fpx.<x> = Fp[]
+while not((x**2 - α).is_irreducible()):
+    α -= 1
+# α = -5
+for i in range(2):
+    print(α**((p**i-1)//2))
 
-# Fp12
-# todo
-
-print("\n\n\n\n\n\n\n\n")
-# Fr
-N = 1<<64
-while N < r:
-    N *= 1<<64
-RR = GF(r)(N)
-two_adicity = valuation(r - 1, 2);
-trace = (r - 1) / 2**two_adicity;
-Fr = GF(r)
-generator = Fr(39415827777849273770726111108287440543547393994679752525064544064550880998990)
-two_adic_root_of_unity = generator^trace
-print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
-print("TWOADICROOTOFUNITY")
-print64(two_adic_root_of_unity*RR%r)
-print("MODULUS")
-print64(r)
-print("R")
-print64(RR)
-print("R2")
-print64(RR**2)
-print("INV")
-print64(-Integers(1<<64)(r)**-1)
-print("GENERATOR")
-g = Fr(1)
-while g.multiplicative_order()!=r-1:
-    g+=1
-print64((int(g)*int(RR))%r)
-print("MODULUS_MINUS_ONE_DIV_TWO")
-print64((r-1)//2)
-print("T")
-print64(trace)
-print("T_MINUS_ONE_DIV_TWO")
-print64((trace-1)//2)
-
-
-x0 = Fp(0)
-cof = E.order()//r
-P = E(0)
-while P.is_zero():
-    x0+=1
-    while not((x0**3 + 1).is_square()):
-        x0+=1
-    P = cof * E.lift_x(x0)
-print(P[0])
-print(-P[1])
-
-x1 = Fp2(0)
+# Fq6
+print("FQ6")
+Fpx.<x> = Fp[]
+Fp2.<u> = GF(p**2, modulus = x**2-α)
+nr = u 
 boo = True
-cof2 = E2.order()//r
-Q = E2(0)
-while Q.is_zero():
+while nr.is_square():
     if boo:
-        x1+=i
+        nr+=1
     else:
-        x1+=1
+        nr += u
     boo = not(boo)
-    while not((x1**3+E2.a6()).is_square()):
-        if boo:
-            x1+=i
-        else:
-            x1+=1
-        boo = not(boo)
-        Q = cof2 * E2.lift_x(x1)
 
-# #params frobenius
-# for k in range(6): 
-#     T=((3+2*i)**((2*p**k-1)//3)).polynomial().list() 
-#     if len(T) == 1: 
-#         T+= [0] 
-#     print(T[0]) 
-#     print(T[1]) 
-#     print() 
-     
-# for k in range(6): 
-#     T=((3+2*i)**((p**k-1)//3)).polynomial().list() 
-#     if len(T) == 1: 
-#         T+= [0] 
-#     print(T[0]) 
-#     print(T[1]) 
-#     print() 
+for k in range(6):
+    L = (nr**((p**(k)-1)//3)).polynomial().list()
+    x0=L[0]
+    if len(L) == 1:
+        x1 = 0
+    else :
+        x1 = L[1]
+    print("\t\t// Fp2(u+1)^(((q^{}) - 1) / 3)".format(k))
+    print("\t\tfield_new!(Fq2,")
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x0))
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x1))
+    print("\t\t),")
+print()
 
-# for k in range(12):
-#     print("\t// Fp2::NONRESIDUE^(((q^{}) - 1) / 6)".format(k))
-#     T=((3+2*i)**((p**k-1)//6)).polynomial().list() 
-#     if len(T) == 1: 
-#         T+= [0] 
-#     print("\tfield_new!(Fq2, fiend_new!(Fq, \"{}\"), field_new!(Fq, \"{}\"),),".format(
-#         T[0],
-#         T[1]
-#     ))
+for k in range(6):
+    L = (nr**((2*p**(k)-2)//3)).polynomial().list()
+    x0=L[0]
+    if len(L) == 1:
+        x1 = 0
+    else :
+        x1 = L[1]
+    print("\t\t// Fp2(u+1)^(((2q^{}) - 2) / 3)".format(k))
+    print("\t\tfield_new!(Fq2,")
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x0))
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x1))
+    print("\t\t),")
+print()
+
+for k in range(12):
+    L = (nr**((p**(k)-1)//6)).polynomial().list()
+    x0=L[0]
+    if len(L) == 1:
+        x1 = 0
+    else :
+        x1 = L[1]
+    print("\t// Fp2::NONRESIDUE^(((q^{}) - 1) / 6)".format(k))
+    print("\tfield_new!(Fq2,")
+    print("\t\tfield_new!(Fq, \"{}\"),".format(x0))
+    print("\t\tfield_new!(Fq, \"{}\"),".format(x1))
+    print("\t),")

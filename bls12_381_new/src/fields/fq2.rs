@@ -12,11 +12,11 @@ impl Fp2Parameters for Fq2Parameters {
     #[rustfmt::skip]
     const NONRESIDUE: Fq = field_new!(Fq, "-5");
 
-    /// QUADRATIC_NONRESIDUE = (2*U + 3)
+    /// QUADRATIC_NONRESIDUE = U
     #[rustfmt::skip]
     const QUADRATIC_NONRESIDUE: (Fq, Fq) = (
-        field_new!(Fq, "3"),
-        field_new!(Fq, "2"),
+        field_new!(Fq, "0"),
+        field_new!(Fq, "1"),
     );
 
     /// Coefficients for the Frobenius automorphism.

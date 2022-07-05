@@ -1,11 +1,12 @@
 #![allow(unused)]
 use ark_ff::{
     fields::{Field, Fp12Parameters, Fp6Parameters, SquareRootField},
-    One, UniformRand, Zero,
+    One, UniformRand, Zero, BigInteger384, FpParameters,
 };
 use core::ops::MulAssign;
+use std::{ops::AddAssign, cmp::Ordering};
 use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters,
-Fr, Parameters};
+Fr, Parameters, FqParameters};
 use ark_algebra_test_templates::fields::*;
 
 pub(crate) const ITERATIONS: usize = 5;
@@ -1511,116 +1512,116 @@ fn test_fq12() {
 //     }
 // }
 
-// #[test]
-// fn test_fq_inverse() {
-//     assert!(Fq::zero().inverse().is_none());
+#[test]
+fn test_fq_inverse() {
+    assert!(Fq::zero().inverse().is_none());
 
-//     let mut rng = ark_std::test_rng();
+    let mut rng = ark_std::test_rng();
 
-//     let one = Fq::one();
+    let one = Fq::one();
 
-//     for _ in 0..1000 {
-//         // Ensure that a * a^-1 = 1
-//         let mut a = Fq::rand(&mut rng);
-//         let ainv = a.inverse().unwrap();
-//         a.mul_assign(&ainv);
-//         assert_eq!(a, one);
-//     }
-// }
+    for _ in 0..1000 {
+        // Ensure that a * a^-1 = 1
+        let mut a = Fq::rand(&mut rng);
+        let ainv = a.inverse().unwrap();
+        a.mul_assign(&ainv);
+        assert_eq!(a, one);
+    }
+}
 
-// #[test]
-// fn test_fq_double_in_place() {
-//     let mut rng = ark_std::test_rng();
+#[test]
+fn test_fq_double_in_place() {
+    let mut rng = ark_std::test_rng();
 
-//     for _ in 0..1000 {
-//         // Ensure doubling a is equivalent to adding a to itself.
-//         let mut a = Fq::rand(&mut rng);
-//         let mut b = a;
-//         b.add_assign(&a);
-//         a.double_in_place();
-//         assert_eq!(a, b);
-//     }
-// }
+    for _ in 0..1000 {
+        // Ensure doubling a is equivalent to adding a to itself.
+        let mut a = Fq::rand(&mut rng);
+        let mut b = a;
+        b.add_assign(&a);
+        a.double_in_place();
+        assert_eq!(a, b);
+    }
+}
 
-// #[test]
-// fn test_fq_negate() {
-//     {
-//         let a = -Fq::zero();
+#[test]
+fn test_fq_negate() {
+    {
+        let a = -Fq::zero();
 
-//         assert!(a.is_zero());
-//     }
+        assert!(a.is_zero());
+    }
 
-//     let mut rng = ark_std::test_rng();
+    let mut rng = ark_std::test_rng();
 
-//     for _ in 0..1000 {
-//         // Ensure (a - (-a)) = 0.
-//         let mut a = Fq::rand(&mut rng);
-//         let b = -a;
-//         a.add_assign(&b);
+    for _ in 0..1000 {
+        // Ensure (a - (-a)) = 0.
+        let mut a = Fq::rand(&mut rng);
+        let b = -a;
+        a.add_assign(&b);
 
-//         assert!(a.is_zero());
-//     }
-// }
+        assert!(a.is_zero());
+    }
+}
 
-// #[test]
-// fn test_fq_pow() {
-//     let mut rng = ark_std::test_rng();
+#[test]
+fn test_fq_pow() {
+    let mut rng = ark_std::test_rng();
 
-//     for i in 0..1000 {
-//         // Exponentiate by various small numbers and ensure it consists with
-// repeated         // multiplication.
-//         let a = Fq::rand(&mut rng);
-//         let target = a.pow(&[i]);
-//         let mut c = Fq::one();
-//         for _ in 0..i {
-//             c.mul_assign(&a);
-//         }
-//         assert_eq!(c, target);
-//     }
+    for i in 0..1000 {
+        // Exponentiate by various small numbers and ensure it consists with repeated
+        // multiplication.
+        let a = Fq::rand(&mut rng);
+        let target = a.pow(&[i]);
+        let mut c = Fq::one();
+        for _ in 0..i {
+            c.mul_assign(&a);
+        }
+        assert_eq!(c, target);
+    }
 
-//     for _ in 0..1000 {
-//         // Exponentiating by the modulus should have no effect in a prime
-// field.         let a = Fq::rand(&mut rng);
+    for _ in 0..1000 {
+        // Exponentiating by the modulus should have no effect in a prime field.
+        let a = Fq::rand(&mut rng);
 
-//         assert_eq!(a, a.pow(Fq::characteristic()));
-//     }
-// }
+        assert_eq!(a, a.pow(Fq::characteristic()));
+    }
+}
 
-// #[test]
-// fn test_fq_sqrt() {
-//     let mut rng = ark_std::test_rng();
+#[test]
+fn test_fq_sqrt() {
+    let mut rng = ark_std::test_rng();
 
-//     assert_eq!(Fq::zero().sqrt().unwrap(), Fq::zero());
+    assert_eq!(Fq::zero().sqrt().unwrap(), Fq::zero());
 
-//     for _ in 0..1000 {
-//         // Ensure sqrt(a^2) = a or -a
-//         let a = Fq::rand(&mut rng);
-//         let nega = -a;
-//         let mut b = a;
-//         b.square_in_place();
+    for _ in 0..1000 {
+        // Ensure sqrt(a^2) = a or -a
+        let a = Fq::rand(&mut rng);
+        let nega = -a;
+        let mut b = a;
+        b.square_in_place();
 
-//         let b = b.sqrt().unwrap();
+        let b = b.sqrt().unwrap();
 
-//         assert!(a == b || nega == b);
-//     }
+        assert!(a == b || nega == b);
+    }
 
-//     for _ in 0..1000 {
-//         // Ensure sqrt(a)^2 = a for random a
-//         let a = Fq::rand(&mut rng);
+    for _ in 0..1000 {
+        // Ensure sqrt(a)^2 = a for random a
+        let a = Fq::rand(&mut rng);
 
-//         if let Some(mut tmp) = a.sqrt() {
-//             tmp.square_in_place();
+        if let Some(mut tmp) = a.sqrt() {
+            tmp.square_in_place();
 
-//             assert_eq!(a, tmp);
-//         }
-//     }
-// }
+            assert_eq!(a, tmp);
+        }
+    }
+}
 
-// #[test]
-// fn test_fq_num_bits() {
-//     assert_eq!(FqParameters::MODULUS_BITS, 381);
-//     assert_eq!(FqParameters::CAPACITY, 380);
-// }
+#[test]
+fn test_fq_num_bits() {
+    assert_eq!(FqParameters::MODULUS_BITS, 381);
+    assert_eq!(FqParameters::CAPACITY, 380);
+}
 
 // #[test]
 // fn test_fq_root_of_unity() {
@@ -1705,35 +1706,35 @@ fn test_fq12() {
 //     assert_eq!(QuadraticResidue, Fq::from(e).legendre());
 // }
 
-// #[test]
-// fn test_fq2_ordering() {
-//     let mut a = Fq2::new(Fq::zero(), Fq::zero());
+#[test]
+fn test_fq2_ordering() {
+    let mut a = Fq2::new(Fq::zero(), Fq::zero());
 
-//     let mut b = a.clone();
+    let mut b = a.clone();
 
-//     assert!(a.cmp(&b) == Ordering::Equal);
-//     b.c0.add_assign(&Fq::one());
-//     assert!(a.cmp(&b) == Ordering::Less);
-//     a.c0.add_assign(&Fq::one());
-//     assert!(a.cmp(&b) == Ordering::Equal);
-//     b.c1.add_assign(&Fq::one());
-//     assert!(a.cmp(&b) == Ordering::Less);
-//     a.c0.add_assign(&Fq::one());
-//     assert!(a.cmp(&b) == Ordering::Less);
-//     a.c1.add_assign(&Fq::one());
-//     assert!(a.cmp(&b) == Ordering::Greater);
-//     b.c0.add_assign(&Fq::one());
-//     assert!(a.cmp(&b) == Ordering::Equal);
-// }
+    assert!(a.cmp(&b) == Ordering::Equal);
+    b.c0.add_assign(&Fq::one());
+    assert!(a.cmp(&b) == Ordering::Less);
+    a.c0.add_assign(&Fq::one());
+    assert!(a.cmp(&b) == Ordering::Equal);
+    b.c1.add_assign(&Fq::one());
+    assert!(a.cmp(&b) == Ordering::Less);
+    a.c0.add_assign(&Fq::one());
+    assert!(a.cmp(&b) == Ordering::Less);
+    a.c1.add_assign(&Fq::one());
+    assert!(a.cmp(&b) == Ordering::Greater);
+    b.c0.add_assign(&Fq::one());
+    assert!(a.cmp(&b) == Ordering::Equal);
+}
 
-// #[test]
-// fn test_fq2_basics() {
-//     assert_eq!(Fq2::new(Fq::zero(), Fq::zero(),), Fq2::zero());
-//     assert_eq!(Fq2::new(Fq::one(), Fq::zero(),), Fq2::one());
-//     assert!(Fq2::zero().is_zero());
-//     assert!(!Fq2::one().is_zero());
-//     assert!(!Fq2::new(Fq::zero(), Fq::one(),).is_zero());
-// }
+#[test]
+fn test_fq2_basics() {
+    assert_eq!(Fq2::new(Fq::zero(), Fq::zero(),), Fq2::zero());
+    assert_eq!(Fq2::new(Fq::one(), Fq::zero(),), Fq2::one());
+    assert!(Fq2::zero().is_zero());
+    assert!(!Fq2::one().is_zero());
+    assert!(!Fq2::new(Fq::zero(), Fq::one(),).is_zero());
+}
 
 // #[test]
 // fn test_fq2_squaring() {
@@ -2221,8 +2222,8 @@ fn test_fq2_legendre() {
     use ark_ff::fields::LegendreSymbol::*;
 
     assert_eq!(Zero, Fq2::zero().legendre());
-    // i^2 = -1
-    let mut m1 = -Fq2::one().double().double() - Fq2::one();
+    // i^2 = -5
+    let mut m1 = -Fq2::one();
     assert_eq!(QuadraticResidue, m1.legendre());
     m1 = Fq6Parameters::mul_fp2_by_nonresidue(&m1);
     assert_eq!(QuadraticNonResidue, m1.legendre());
@@ -2232,7 +2233,7 @@ fn test_fq2_legendre() {
 fn test_fq2_mul_nonresidue() {
     let mut rng = ark_std::test_rng();
 
-    let nqr = Fq2::new(Fq::from(3), Fq::from(2));
+    let nqr = Fq2::new(Fq::zero(), Fq::one());
 
     for _ in 0..1000 {
         let mut a = Fq2::rand(&mut rng);
