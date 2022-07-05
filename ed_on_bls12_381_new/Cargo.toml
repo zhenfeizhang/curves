@@ -18,12 +18,12 @@ ark-ec = { version = "^0.3.0", default-features = false }
 ark-std = { version = "^0.3.0", default-features = false }
 ark-r1cs-std = { version = "^0.3.0", default-features = false, optional = true }
 ark-bls12-381-new = {  git="https://github.com/simonmasson/curves/", branch="new-pairing-layer"}#, default-features = false, features = [ "scalar_field" ] }
+ark-algebra-test-templates = { version = "^0.3.0", default-features = false }
 
 
 [dev-dependencies]
 ark-relations = { version = "^0.3.0", default-features = false }
 ark-serialize = { version = "^0.3.0", default-features = false }
-ark-algebra-test-templates = { version = "^0.3.0", default-features = false }
 ark-curve-constraint-tests = { path = "../curve-constraint-tests", default-features = false }
 
 [features]
