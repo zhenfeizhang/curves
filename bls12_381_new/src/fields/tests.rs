@@ -3,7 +3,7 @@ use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters, FqParameters, Fr,
 use ark_algebra_test_templates::fields::*;
 use ark_ff::{
     fields::{Field, Fp12Parameters, Fp6Parameters, SquareRootField},
-    BigInteger384, FpParameters, One, UniformRand, Zero,
+    BigInteger384, FpParameters, One, UniformRand, Zero, BigInteger,
 };
 use core::ops::MulAssign;
 use std::{cmp::Ordering, ops::AddAssign};
@@ -826,12 +826,12 @@ fn test_fq12() {
 //     assert!(!BigInteger384::from(324834873).is_even());
 // }
 
-// #[test]
-// fn test_fq_repr_is_zero() {
-//     assert!(BigInteger384::from(0).is_zero());
-//     assert!(!BigInteger384::from(1).is_zero());
-//     assert!(!BigInteger384([0, 0, 0, 0, 1, 0]).is_zero());
-// }
+#[test]
+fn test_fq_repr_is_zero() {
+    assert!(BigInteger384::from(0).is_zero());
+    assert!(!BigInteger384::from(1).is_zero());
+    assert!(!BigInteger384([0, 0, 0, 0, 1, 0]).is_zero());
+}
 
 // #[test]
 // fn test_fq_repr_div2() {
