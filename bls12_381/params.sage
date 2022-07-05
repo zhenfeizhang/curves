@@ -1,3 +1,6 @@
+from re import U
+
+
 r = 52435875175126190479447740508185965837690552500527637822603658699938581184513
 
 assert r.is_prime()
@@ -43,3 +46,62 @@ T = (r-1)//(1<<valuation(r-1,2))
 print64(T)
 print("T_MINUS_ONE_DIV_TWO")
 print64((T-1)//2)
+
+
+p = 4002409555221667393417789825735904156556882819939007885332058136124031650490837864442687629129015664037894272559787
+Fp = GF(p)
+α=-1
+Fpx.<x> = Fp[]
+Fp2.<u> = GF(p**2, modulus=x**2-α)
+nr = 1
+boo = True
+while nr.is_square():
+    if boo:
+        nr += u
+    else :
+        nr+=1
+    boo = not(boo)
+print(nr)
+
+for k in range(6):
+    L = (nr**((p**(k)-1)//3)).polynomial().list()
+    x0=L[0]
+    if len(L) == 1:
+        x1 = 0
+    else :
+        x1 = L[1]
+    print("\t\t// Fp2(u+1)^(((q^{}) - 1) / 3)".format(k))
+    print("\t\tfield_new!(Fq2,")
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x0))
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x1))
+    print("\t\t),")
+print()
+
+for k in range(6):
+    L = (nr**((2*p**(k)-2)//3)).polynomial().list()
+    x0=L[0]
+    if len(L) == 1:
+        x1 = 0
+    else :
+        x1 = L[1]
+    print("\t\t// Fp2(u+1)^(((2q^{}) - 2) / 3)".format(k))
+    print("\t\tfield_new!(Fq2,")
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x0))
+    print("\t\t\tfield_new!(Fq, \"{}\"),".format(x1))
+    print("\t\t),")
+print()
+
+
+
+for k in range(12):
+    L = (nr**((p**(k)-1)//6)).polynomial().list()
+    x0=L[0]
+    if len(L) == 1:
+        x1 = 0
+    else :
+        x1 = L[1]
+    print("\t// Fp2::NONRESIDUE^(((q^{}) - 1) / 6)".format(k))
+    print("\tfield_new!(Fq2,")
+    print("\t\tfield_new!(Fq, \"{}\"),".format(x0))
+    print("\t\tfield_new!(Fq, \"{}\"),".format(x1))
+    print("\t),")
