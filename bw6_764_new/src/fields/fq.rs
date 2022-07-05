@@ -105,18 +105,18 @@ impl FpParameters for FqParameters {
     // primitive_root(MODULUS)
     #[rustfmt::skip]
     const GENERATOR: BigInteger = BigInteger([
-        0xb24a6ffffffffecc,
-        0x746a11e8c7dbfc4e,
-        0x443051ed5b4ac979,
-        0xe61cf99920eac9e6,
-        0xa7124a29d870f9e0,
-        0xc5f4cb2a01a9899f,
-        0x14fa048245b88f8a,
-        0x4c14c26ec8f3e08a,
-        0x29555ca163ba22ee,
-        0x3db063384519a6cb,
-        0x5090effacc30cd48,
-        0x647ce694422545c
+        0xc7e1dbffffffffc3,
+        0x466ec60a5cc6ff44,
+        0x659bdb07f1aa3d83,
+        0x204691d9572486bd,
+        0x875295566adddb0c,
+        0x7f4f3c2f62683a02,
+        0x3e561680dd99bf56,
+        0x85180f3c2cc93c43,
+        0x7511bcbc39275bb2,
+        0xc37b68f4cdab0d3,
+        0x8e4b4026dda299b2,
+        0x63b1ac011a66229,
     ]);
 
     // (MODULUS - 1) / 2
@@ -141,35 +141,35 @@ impl FpParameters for FqParameters {
     // (MODULUS - 1) / 2 ^ TWO_ADICITY
     #[rustfmt::skip]
     const T: BigInteger = BigInteger([
-        0x1902ad000311b4f4,
-        0x68c9ad78b24e9544,
-        0x3730ee9d443d48fc,
-        0x2cbf4c19c93e6bf5,
-        0x964e1fdd79a9d8e0,
-        0x5604c2b9b73cdd20,
-        0xea07a8c4420b9179,
-        0x593e038d2f6f212d,
-        0xdc13b944720aabc6,
-        0x4282a96665ffccb9,
-        0x725c09dcd127a270,
-        0x84a92
+        0x640ab4000c46d3d,
+        0x1a326b5e2c93a551,
+        0x4dcc3ba7510f523f,
+        0xb2fd306724f9afd,
+        0x259387f75e6a7638,
+        0x558130ae6dcf3748,
+        0x7a81ea311082e45e,
+        0x964f80e34bdbc84b,
+        0x7704ee511c82aaf1,
+        0x10a0aa59997ff32e,
+        0x9c9702773449e89c,
+        0x212a4,
     ]);
 
     // (T - 1)/2 =
     // 1722862596078933134849197420568914385619917228134037527378447540052405855560872934021920795822352921910216141938446653362790439780138561939837377924781325399737901274844627212593135907855899198987974925107492278210691228279767074
     #[rustfmt::skip]
     const T_MINUS_ONE_DIV_TWO: BigInteger = BigInteger([
-        0xc8156800188da79,
-        0x3464d6bc59274aa2,
-        0x9b98774ea21ea47e,
-        0x165fa60ce49f35fa,
-        0x4b270feebcd4ec70,
-        0xab02615cdb9e6e90,
-        0xf503d4622105c8bc,
-        0x2c9f01c697b79096,
-        0xee09dca2390555e3,
-        0x214154b332ffe65c,
-        0x392e04ee6893d138,
-        0x42549
+        0x832055a00062369e,
+        0x8d1935af1649d2a8,
+        0xa6e61dd3a887a91f,
+        0x597e9833927cd7e,
+        0x12c9c3fbaf353b1c,
+        0x2ac0985736e79ba4,
+        0xbd40f5188841722f,
+        0xcb27c071a5ede425,
+        0x3b8277288e415578,
+        0x850552cccbff997,
+        0x4e4b813b9a24f44e,
+        0x10952,
     ]);
 }

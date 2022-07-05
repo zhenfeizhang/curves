@@ -15,6 +15,8 @@ impl Fp6Parameters for Fq6Parameters {
     #[rustfmt::skip]
     const NONRESIDUE: Fq3 = field_new!(Fq3, FQ_ZERO, FQ_ONE, FQ_ZERO);
 
+    // warning, MODULUS=q³
+    // NQR ^ (MODULUS^i - 1)/3, i=0,1,2,3,4,5,6 with NQR = u = (0,1,0)
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP6_C1: &'static [Fq] = &[
         field_new!(Fq, "1"),

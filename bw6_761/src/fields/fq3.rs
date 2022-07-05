@@ -72,6 +72,7 @@ impl Fp3Parameters for Fq3Parameters {
         FQ_ZERO,
     );
 
+    // warning, MODULUS=q³
     // NQR ^ (MODULUS^i - 1)/3, i=0,1,2 with NQR = u = (0,1,0)
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP3_C1: &'static [Fq] = &[

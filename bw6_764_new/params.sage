@@ -1,26 +1,12 @@
-from re import I, U
-from sympy import true
-
-
 p = 50282768576993852407494634308294841376983574838385858405447848583376065247544506093833501024756151257915195555055355085817082514603850271637792434072458297604453662538937558570183541064674323908560052492735693432884208755873415169
 r = 2680159072491083434851704741251836777263822501214542753513157466943449604067937977626421502422550778814509982154753
 val2p = valuation(p - 1, 2)
-val2r = valuation(r - 1, 2)
 
 proof.arithmetic(False)
 
 Fp = GF(p)
 E = EllipticCurve(Fp, [0, 3])
 assert E.order()%r == 0
-
-
-# non square
-β = Fp(-11)
-Fpx.<x> = Fp[]
-Fp2.<i> = GF(p**2, modulus = x**2+β)
-
-E2 = EllipticCurve(Fp, [0,3*11])
-# E2 : y² = x³+33
 
 def print64(x):
     y=int(x)
@@ -30,12 +16,28 @@ def print64(x):
         y >>= 64
     print(']')
 
-generator = Fp(2)
-#check?
+def print10(x):
+    y=int(x)
+    print('[')
+    while y>0:
+        print("\t{}, ".format(y%(1<<64)))
+        y >>= 64
+    print(']')
 
+from sage.rings.factorint import factor_trial_division
+partial_facto = factor_trial_division(p-1, 1<<20)
+def is_generator(g):
+    for (f,_) in partial_facto:
+        if g**f == 1:
+            return False
+    return True
+g = Fp(1)
+while not(is_generator(g)):
+    g +=1
+# g = Fp(2)
 two_adicity = valuation(p - 1, 2);
 trace = (p - 1) / 2**two_adicity;
-two_adic_root_of_unity = generator^trace
+two_adic_root_of_unity = g^trace
 M = 1<<64
 while M < p :
     M *= 1<<64
@@ -54,33 +56,33 @@ print64(R**2)
 print("INV")
 print64(-Integers(1<<64)(p)**-1)
 print("GENERATOR")
-print64((10*R)%p)
+print64((g*R)%p)
 print("MODULUS_MINUS_ONE_DIV_TWO")
 print64((p-1)//2)
 print("T")
-T = (p-1)//(1<<40)
+T = (p-1)//(1<<valuation(p-1,2))
 print64(T)
 print("T_MINUS_ONE_DIV_TWO")
 print64((T-1)//2)
 
-
-α = Fp(1)
-boo = True
+# Fq3
+print("FQ3")
+α = Fp(-1)
+Fpx.<x> = Fp[]
 while not((x**3 - α).is_irreducible()):
-    if boo:
-        α+=1
-    else :
-        α*= -1
-    boo = not(boo)
-# alpha = 2
+    α -= 1
+# This time, α = Fp(-2)
 
-for i in range(3):
-    print(α**((p**i-1)//3))
-for i in range(3):
-    print(α**((2*p**i-1)//3))
+T = (p**3-1)//(1<<valuation(p**3-1,2))
+print("T_MINUS_ONE_DIV_2")
+print64((T-1)//2)
+
+print("QUADRATIC_NONRESIDUE_TO_T")
+print(α**T)
+
 
 Fp3.<u> = GF(p**3, modulus = x**3-α)
-nsq = Fp3(1)
+nsq = Fp3(u)
 cpt = 0
 while nsq.is_square():
     if cpt == 0 :
@@ -91,7 +93,17 @@ while nsq.is_square():
         nsq+=1
     cpt+=1
     cpt%=3
-print(nsq)
+
+for i in range(3):
+    print(nsq**((p**(3*i)-1)//3))
+for i in range(3):
+    print(nsq**((2*p**(3*i)-1)//3))
+
+
+#Fq6
+print("FQ6")
+for i in range(6):
+    print(nsq**((p**(3*i)-1)//6))
 
 
 # G1

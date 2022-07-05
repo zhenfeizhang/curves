@@ -1,4 +1,5 @@
 p = 6891450384315732539396789682275657542479668912536150109513790160209623422243491736087683183289411687640864567753786613451161759120554247759349511699125301598951605099378508850372543631423596795951899700429969112842764913119068299
+r = 258664426012969094010652733694893533536393512754914660539884262666720468348340822774968888139573360124440321458177
 val2p = valuation(p - 1, 2)
 
 proof.arithmetic(False)
@@ -6,7 +7,6 @@ proof.arithmetic(False)
 Fp = GF(p)
 E = EllipticCurve(Fp, [0, -1])
 assert E.order()%r == 0
-
 
 def print64(x):
     y=int(x)
@@ -16,9 +16,28 @@ def print64(x):
         y >>= 64
     print(']')
 
+def print10(x):
+    y=int(x)
+    print('[')
+    while y>0:
+        print("\t{}, ".format(y%(1<<64)))
+        y >>= 64
+    print(']')
+
+from sage.rings.factorint import factor_trial_division
+partial_facto = factor_trial_division(p-1, 1<<20)
+def is_generator(g):
+    for (f,_) in partial_facto:
+        if g**f == 1:
+            return False
+    return True
+g = Fp(1)
+while not(is_generator(g)):
+    g +=1
+# g = Fp(2)
 two_adicity = valuation(p - 1, 2);
 trace = (p - 1) / 2**two_adicity;
-two_adic_root_of_unity = generator^trace
+two_adic_root_of_unity = g^trace
 M = 1<<64
 while M < p :
     M *= 1<<64
@@ -31,39 +50,39 @@ print64(p)
 print("MODULUSBITS")
 print(p.nbits())
 print("R")
-print64(R)
+print10(R)
 print("R2")
-print64(R**2)
+print10(R**2)
 print("INV")
-print64(-Integers(1<<64)(p)**-1)
+print10(-Integers(1<<64)(p)**-1)
 print("GENERATOR")
-print64((10*R)%p)
+print10((g*R)%p)
 print("MODULUS_MINUS_ONE_DIV_TWO")
 print64((p-1)//2)
 print("T")
-T = (p-1)//(1<<40)
+T = (p-1)//(1<<valuation(p-1,2))
 print64(T)
 print("T_MINUS_ONE_DIV_TWO")
 print64((T-1)//2)
 
-
-α = Fp(1)
-boo = True
+# Fq3
+print("FQ3")
+α = Fp(-1)
+Fpx.<x> = Fp[]
 while not((x**3 - α).is_irreducible()):
-    if boo:
-        α+=1
-    else :
-        α*= -1
-    boo = not(boo)
-# alpha = 2
+    α -= 1
+α = Fp(-4) #idk why they don't use a smaller??
 
-for i in range(3):
-    print(α**((p**i-1)//3))
-for i in range(3):
-    print(α**((2*p**i-1)//3))
+T = (p**3-1)//(1<<valuation(p**3-1,2))
+print("T_MINUS_ONE_DIV_2")
+print64((T-1)//2)
+
+print("QUADRATIC_NONRESIDUE_TO_T")
+print(α**T)
+
 
 Fp3.<u> = GF(p**3, modulus = x**3-α)
-nsq = Fp3(1)
+nsq = Fp3(u)
 cpt = 0
 while nsq.is_square():
     if cpt == 0 :
@@ -74,7 +93,18 @@ while nsq.is_square():
         nsq+=1
     cpt+=1
     cpt%=3
-print(nsq)
+# nsq = u
+
+for i in range(3):
+    print(nsq**((p**(3*i)-1)//3))
+for i in range(3):
+    print(nsq**((2*p**(3*i)-1)//3))
+
+#Fq6
+print("FQ6")
+for i in range(6):
+    print(nsq**((p**(3*i)-1)//6))
+
 
 
 # G1
