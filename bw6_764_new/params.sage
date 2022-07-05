@@ -16,25 +16,17 @@ def print64(x):
         y >>= 64
     print(']')
 
-def print10(x):
-    y=int(x)
-    print('[')
-    while y>0:
-        print("\t{}, ".format(y%(1<<64)))
-        y >>= 64
-    print(']')
-
 from sage.rings.factorint import factor_trial_division
 partial_facto = factor_trial_division(p-1, 1<<20)
 def is_generator(g):
     for (f,_) in partial_facto:
-        if g**f == 1:
+        if g**((p-1)//f) == 1:
             return False
     return True
 g = Fp(1)
 while not(is_generator(g)):
     g +=1
-# g = Fp(2)
+# g = Fp(11)
 two_adicity = valuation(p - 1, 2);
 trace = (p - 1) / 2**two_adicity;
 two_adic_root_of_unity = g^trace
@@ -67,43 +59,41 @@ print64((T-1)//2)
 
 # Fq3
 print("FQ3")
-α = Fp(-1)
+α = Fp(1)
 Fpx.<x> = Fp[]
 while not((x**3 - α).is_irreducible()):
-    α -= 1
-# This time, α = Fp(-2)
+    α += 1
+
+ns = Fp(1)
+while ns.is_square():
+    ns+=1
+print(ns)
+#ns = Fp(11)
 
 T = (p**3-1)//(1<<valuation(p**3-1,2))
 print("T_MINUS_ONE_DIV_2")
 print64((T-1)//2)
 
 print("QUADRATIC_NONRESIDUE_TO_T")
-print(α**T)
+print(ns**T)
 
 
 Fp3.<u> = GF(p**3, modulus = x**3-α)
 nsq = Fp3(u)
-cpt = 0
-while nsq.is_square():
-    if cpt == 0 :
-        nsq +=u 
-    if cpt == 1:
-        nsq+=u**2
-    if cpt == 3:
-        nsq+=1
-    cpt+=1
-    cpt%=3
+if nsq.is_square():
+    nsq *= ns
+# nsq = 11*u
 
 for i in range(3):
     print(nsq**((p**(3*i)-1)//3))
 for i in range(3):
     print(nsq**((2*p**(3*i)-1)//3))
 
-
 #Fq6
 print("FQ6")
 for i in range(6):
     print(nsq**((p**(3*i)-1)//6))
+
 
 
 # G1

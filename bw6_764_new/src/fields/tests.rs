@@ -1,16 +1,10 @@
-use ark_ff::{Field, PrimeField, SquareRootField};
+use ark_ff::{Field, PrimeField};
 use ark_serialize::{buffer_bit_byte_size, CanonicalSerialize};
 use ark_std::{rand::Rng, test_rng};
 
 use crate::*;
 
 use ark_algebra_test_templates::fields::*;
-
-#[test]
-fn test_sqrt() {
-    let a: Fq = Fq::from(4);
-    let _sqrt_a = a.sqrt().unwrap();
-}
 
 #[test]
 fn test_fr() {

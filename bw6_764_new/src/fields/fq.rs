@@ -25,18 +25,18 @@ impl FftParameters for FqParameters {
     // least_quadratic_nonresidue(MODULUS) in Sage.
     #[rustfmt::skip]
     const TWO_ADIC_ROOT_OF_UNITY: BigInteger = BigInteger([
-        0x34d1251ae4c6e958,
-        0x90b838003f5b02ba,
-        0xa98534c0333ba476,
-        0xd47e38c61dafe67e,
-        0x466f2e4d6dc1dbbd,
-        0xae06cb442a9ef009,
-        0xe23b98ecaf348c9c,
-        0x4671664ceabe1b9f,
-        0xdbe8b3c55bce4eba,
-        0x215edd8dbcb41192,
-        0x73802395ac032fa2,
-        0x435ddf72cdccea5,
+        0xb91aa557204e7ce2,
+        0x4fdaa74e408afbc5,
+        0x89c8788abc51af93,
+        0x2546c47f82cb9bee,
+        0x6434a826d3712d01,
+        0x4c6094e639ccc339,
+        0x66759c7de9989e5e,
+        0x86ea8c8e367e511e,
+        0xab23ef6019c366,
+        0xc6234560f21e3838,
+        0x7efc746c04af7cbe,
+        0x4d05df2a34e8474,
     ]);
 }
 impl FpParameters for FqParameters {
@@ -105,18 +105,18 @@ impl FpParameters for FqParameters {
     // primitive_root(MODULUS)
     #[rustfmt::skip]
     const GENERATOR: BigInteger = BigInteger([
-        0xc7e1dbffffffffc3,
-        0x466ec60a5cc6ff44,
-        0x659bdb07f1aa3d83,
-        0x204691d9572486bd,
-        0x875295566adddb0c,
-        0x7f4f3c2f62683a02,
-        0x3e561680dd99bf56,
-        0x85180f3c2cc93c43,
-        0x7511bcbc39275bb2,
-        0xc37b68f4cdab0d3,
-        0x8e4b4026dda299b2,
-        0x63b1ac011a66229,
+        0x8d60e3fffffffead,
+        0xf056d2e174e8fbef,
+        0xd859c13cef492be1,
+        0x570a47ea3405bea2,
+        0x15cf24beae39da82,
+        0x672dd8f68bcdb7e4,
+        0xae5c5317b224125a,
+        0xd7103317db841c8a,
+        0xde8857d2e14c0a2f,
+        0x43e5e191e1aa5cfb,
+        0x83e557ecf9ad66ee,
+        0x54012901ef09708,
     ]);
 
     // (MODULUS - 1) / 2

@@ -3,7 +3,7 @@ use crate::{Fq, Fq12, Fq12Parameters, Fq2, Fq6, Fq6Parameters, FqParameters, Fr,
 use ark_algebra_test_templates::fields::*;
 use ark_ff::{
     fields::{Field, Fp12Parameters, Fp6Parameters, SquareRootField},
-    BigInteger384, FpParameters, One, UniformRand, Zero, BigInteger,
+    BigInteger, BigInteger384, FpParameters, One, UniformRand, Zero,
 };
 use core::ops::MulAssign;
 use std::{cmp::Ordering, ops::AddAssign};
