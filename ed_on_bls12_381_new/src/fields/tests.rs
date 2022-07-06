@@ -1,7 +1,7 @@
 #![allow(unused)]
-use ark_std::{rand::Rng, test_rng};
 use crate::{Fq, Fr};
 use ark_algebra_test_templates::fields::*;
+use ark_std::{rand::Rng, test_rng};
 
 #[test]
 fn test_fr() {

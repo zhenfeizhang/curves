@@ -79,11 +79,15 @@ print(ns**T)
 
 
 Fp3.<u> = GF(p**3, modulus = x**3-α)
+Fp3y.<y> = Fp3[]
+
 nsq = Fp3(u)
-if nsq.is_square():
+if not((y**3-nsq).is_irreducible()):
     nsq *= ns
+print(nsq)
 # nsq = 11*u
 
+print("FQ3")
 for i in range(3):
     print(nsq**((p**(3*i)-1)//3))
 for i in range(3):
