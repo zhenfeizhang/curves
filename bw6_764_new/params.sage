@@ -16,6 +16,7 @@ def print64(x):
         y >>= 64
     print(']')
 
+from re import U
 from sage.rings.factorint import factor_trial_division
 partial_facto = factor_trial_division(p-1, 1<<20)
 def is_generator(g):
@@ -109,8 +110,19 @@ print("COFACTOR_INV")
 print(Fr(cof)**-1)
 
 # G2
-cof2 = E2.order()//r 
-print("COFACTOR")
+Fpx.<x> = Fp[]
+α = Fp(1)
+boo = True
+while not((x**6-α).is_irreducible()):
+    α = -α
+    if boo:
+        α+=1
+    boo = not(boo)
+E2 = EllipticCurve([0, E.a6() * α])
+assert E2.order()%r == 0
+cof2 = E2.order()//r
+print("COF2")
 print(cof2)
-print64(cof2)
-print(Fr(cof2)**-1)
+inv_cof2 = 1/GF(r)(cof2)
+print("INV_COF2")
+print(inv_cof2)
