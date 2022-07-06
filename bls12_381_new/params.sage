@@ -5,6 +5,15 @@ assert p.is_prime()
 assert r.is_prime()
 proof.arithmetic(False)
 
+
+def print64(x):
+    y=int(x)
+    print('[')
+    while y>0:
+        print("\t{}, ".format(hex(y%(1<<64))))
+        y >>= 64
+    print(']')
+    
 # G1
 Fp = GF(p)
 E = EllipticCurve(Fp, [0,1])
@@ -47,14 +56,6 @@ print("COF2")
 print64(cof2)
 print("COF2INV")
 print(1/GF(r)(cof2))
-
-def print64(x):
-    y=int(x)
-    print('[')
-    while y>0:
-        print("\t{}, ".format(hex(y%(1<<64))))
-        y >>= 64
-    print(']')
 
 # Fp
 g = Fp(1)
@@ -154,3 +155,5 @@ for k in range(12):
     print("\t\tfield_new!(Fq, \"{}\"),".format(x0))
     print("\t\tfield_new!(Fq, \"{}\"),".format(x1))
     print("\t),")
+
+G1 = E(132958330983984893695165623413810542674704168143441818421981068363929595617071520952605269382545513645734829850271,-1006336734889717938013612781497829381100950959809844863048520201949401120587783327756385452500762745860458840909358)
