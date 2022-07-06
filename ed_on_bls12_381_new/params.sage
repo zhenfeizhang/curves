@@ -124,3 +124,16 @@ cof = 36
 cof_inv = Fr(36)**-1
 print("COFACTOR_INV")
 print(cof_inv)
+
+Fp2.<u> = GF(p**2)
+E2 = E.change_ring(Fp2)
+
+for (x7, _) in E2.division_polynomial(7).roots():
+    P7 = E2.lift_x(x7)
+    assert 7*P7 == 0 and P7 != 0
+    if E2.isogeny_codomain(P7).j_invariant() == E2.j_invariant():
+        break
+
+(φ,π) = E2.isogeny(P7).rational_maps()
+φn,φd = φ.numerator(), φ.denominator()
+πn,πd = π.numerator(), π.denominator()
