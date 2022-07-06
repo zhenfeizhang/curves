@@ -1,10 +1,11 @@
 #![allow(unused_imports)]
 use ark_ec::{
-    bls12::Bls12Parameters, models::SWModelParameters, AffineCurve, PairingEngine, ProjectiveCurve, short_weierstrass_jacobian::GroupProjective, group::Group,
+    bls12::Bls12Parameters, group::Group, models::SWModelParameters,
+    short_weierstrass_jacobian::GroupProjective, AffineCurve, PairingEngine, ProjectiveCurve,
 };
 use ark_ff::{
     fields::{Field, FpParameters, PrimeField, SquareRootField},
-    One, UniformRand, Zero,
+    BigInteger, One, UniformRand, Zero,
 };
 use ark_serialize::CanonicalSerialize;
 use ark_std::{rand::Rng, test_rng};
@@ -74,14 +75,19 @@ fn test_bilinearity() {
     let mut sb = b;
     sb.mul_assign(s);
 
+    // let g1_prep = <Bls12_381New as
+    // PairingEngine>::G1Prepared::from(a.into_affine()); let g2_prep =
+    // <Bls12_381New as PairingEngine>::G2Prepared::from(b.into_affine());
+    // let ml = <Bls12_381New as
+    // PairingEngine>::miller_loop(core::iter::once(&(g1_prep, g2_prep)));
+    // let fe = <Bls12_381New as PairingEngine>::final_exponentiation(&ml).unwrap();
+    // let fe_plus = fe.pow(crate::FrParameters::MODULUS);
+    // println!("end={}", fe_plus);
+
     let ans1 = Bls12_381New::pairing(sa, b);
     let ans2 = Bls12_381New::pairing(a, sb);
     let ans3 = Bls12_381New::pairing(a, b).pow(s.into_repr());
 
-    println!("ans1={}", ans1);
-    println!("ans2={}", ans2);
-    println!("ans3={}", ans3);
-    
     assert_eq!(ans1, ans2);
     assert_eq!(ans2, ans3);
 

@@ -88,10 +88,10 @@ impl Fp6Parameters for Fq6Parameters {
     fn mul_fp2_by_nonresidue(fe: &Fq2) -> Fq2 {
         // (x+uy) * (u+1) = xu + u²y + x+uy = x-5y + u*(x+y)
         let mut copy = *fe;
-		let x = copy.c0;
-		let y = copy.c1;
-		copy.c0 = x -y.double().double() - y;
-		copy.c1 = x+y;
+        let x = copy.c0;
+        let y = copy.c1;
+        copy.c0 = x - y.double().double() - y;
+        copy.c1 = x + y;
         copy
     }
 }

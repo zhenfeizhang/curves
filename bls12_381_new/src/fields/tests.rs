@@ -2216,23 +2216,24 @@ fn test_fq2_basics() {
 //     );
 // }
 
-#[test]
-fn test_fq2_legendre() {
-    use ark_ff::fields::LegendreSymbol::*;
+// // not the case with our curve
+// #[test]
+// fn test_fq2_legendre() {
+//     use ark_ff::fields::LegendreSymbol::*;
 
-    assert_eq!(Zero, Fq2::zero().legendre());
-    // i^2 = -5
-    let mut m1 = -Fq2::one();
-    assert_eq!(QuadraticResidue, m1.legendre());
-    m1 = Fq6Parameters::mul_fp2_by_nonresidue(&m1);
-    assert_eq!(QuadraticNonResidue, m1.legendre());
-}
+//     assert_eq!(Zero, Fq2::zero().legendre());
+//     // i^2 = -5
+//     let mut m1 = -Fq2::one().double().double() - Fq2::one();
+//     assert_eq!(QuadraticResidue, m1.legendre());
+//     m1 = Fq6Parameters::mul_fp2_by_nonresidue(&m1);
+//     assert_eq!(QuadraticNonResidue, m1.legendre());
+// }
 
 #[test]
 fn test_fq2_mul_nonresidue() {
     let mut rng = ark_std::test_rng();
 
-    let nqr = Fq2::new(Fq::zero(), Fq::one());
+    let nqr = Fq2::new(Fq::one(), Fq::one());
 
     for _ in 0..1000 {
         let mut a = Fq2::rand(&mut rng);

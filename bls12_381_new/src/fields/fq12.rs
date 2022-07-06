@@ -9,13 +9,8 @@ pub struct Fq12Parameters;
 impl Fp12Parameters for Fq12Parameters {
     type Fp6Params = Fq6Parameters;
 
-    // not useful???
-    const NONRESIDUE: Fq6 = field_new!(
-        Fq6,
-        field_new!(Fq2, field_new!(Fq, "2"), field_new!(Fq, "0"),),
-        field_new!(Fq2, field_new!(Fq, "3"), field_new!(Fq, "0"),),
-        field_new!(Fq2, field_new!(Fq, "2"), field_new!(Fq, "0"),),
-    );
+    // what is that?
+    const NONRESIDUE: Fq6 = field_new!(Fq6, FQ2_ZERO, FQ2_ONE, FQ2_ZERO,);
 
     const FROBENIUS_COEFF_FP12_C1: &'static [Fq2] = &[
 	// Fp2::NONRESIDUE^(((q^0) - 1) / 6)
