@@ -1,6 +1,6 @@
 #![allow(unused_imports)]
 use ark_ec::{
-    bls12::Bls12Parameters, models::SWModelParameters, AffineCurve, PairingEngine, ProjectiveCurve,
+    bls12::Bls12Parameters, models::SWModelParameters, AffineCurve, PairingEngine, ProjectiveCurve, short_weierstrass_jacobian::GroupProjective, group::Group,
 };
 use ark_ff::{
     fields::{Field, FpParameters, PrimeField, SquareRootField},
@@ -16,6 +16,7 @@ use crate::{
     Bls12_381New, Fq, Fq12, Fq2, Fr, G1Affine, G1Projective, G2Affine, G2Projective,
 };
 use ark_algebra_test_templates::{curves::*, groups::*};
+use ark_ec::short_weierstrass_jacobian::GroupAffine;
 
 #[test]
 fn test_g1_projective_curve() {
@@ -77,6 +78,10 @@ fn test_bilinearity() {
     let ans2 = Bls12_381New::pairing(a, sb);
     let ans3 = Bls12_381New::pairing(a, b).pow(s.into_repr());
 
+    println!("ans1={}", ans1);
+    println!("ans2={}", ans2);
+    println!("ans3={}", ans3);
+    
     assert_eq!(ans1, ans2);
     assert_eq!(ans2, ans3);
 

@@ -1,8 +1,3 @@
-from re import I, U
-
-from pyrsistent import v
-
-
 p = 2680159072491083434851704741251836777263822501214542753513157466943449604067937977626421502422550778814509982154753
 r = 40134810535214015562426085132763902269106966834552711290100314126475667177473
 
@@ -18,19 +13,40 @@ assert E.order()%r == 0
 # G2
 Fpx.<x> = Fp[]
 Fp2.<i> = GF(p**2, modulus=x**2+5)
+Fp2y.<y> = Fp2[]
 
-b2 = 1+i
+β = Fp2(1)
 boo = True
-E2 = EllipticCurve(Fp2, [0,b2])
-while E2.order()%r != 0:
+while not((y^6-β).is_irreducible()):
     if boo:
-        b2 += i
+        β+=i
     else:
-        b2 += 1
+        β+=1
     boo = not(boo)
-    E2 = EllipticCurve(Fp2, [0,b2])
-# b2 = 4+4i
+# β = 3+2*u
+E2 = EllipticCurve(Fp2, [0,E.a6()/β])
+assert E2.order()%r==0
+cof2 = E2.order()//r
 
+print("G2 CURVE b coeff")
+print(E2.a6())
+
+# generator of G2
+x0 = Fp2(0)
+boo = True
+while not((x0**3 + E2.a6()).is_square()):
+    if boo:
+        x0 += i
+    else : 
+        x0 += 1
+    boo = not(boo)
+G2 = cof2 * E2.lift_x(x0)
+print("G2")
+print(G2)
+print("COF2")
+print64(cof2)
+print("COF2INV")
+print(1/GF(r)(cof2))
 
 def print64(x):
     y=int(x)
@@ -88,9 +104,10 @@ for i in range(2):
 print("FQ6")
 Fpx.<x> = Fp[]
 Fp2.<u> = GF(p**2, modulus = x**2-α)
+Fp2y.<y> = Fp2[]
 nr = u 
 boo = True
-while nr.is_square():
+while not((y**3-nr).is_irreducible()):
     if boo:
         nr+=1
     else:
