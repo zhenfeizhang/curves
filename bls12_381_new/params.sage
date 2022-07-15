@@ -5,15 +5,19 @@ assert p.is_prime()
 assert r.is_prime()
 proof.arithmetic(False)
 
-
 def print64(x):
+    # print a large number in slice of 64 bit integers
     y=int(x)
     print('[')
     while y>0:
         print("\t{}, ".format(hex(y%(1<<64))))
         y >>= 64
     print(']')
-    
+
+# Fp
+print('// informations to be written in `fq.rs`')
+print('const')
+
 # G1
 Fp = GF(p)
 E = EllipticCurve(Fp, [0,1])
@@ -114,6 +118,9 @@ while not((y**3-nr).is_irreducible()):
     else:
         nr += u
     boo = not(boo)
+
+# lets use 3+2u
+nr = 3+2*u
 
 for k in range(6):
     L = (nr**((p**(k)-1)//3)).polynomial().list()

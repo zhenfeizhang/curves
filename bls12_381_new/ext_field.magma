@@ -1,0 +1,22 @@
+p := 2680159072491083434851704741251836777263822501214542753513157466943449604067937977626421502422550778814509982154753;
+Fp := GF(p);
+Fpx<x> := PolynomialRing(Fp);
+Fp2<u> := ext<Fp | x^2+5>;
+gen2 := Fp2!([1,1]);
+Fp2y<y> := PolynomialRing(Fp2);
+Fp6<v> := ext<Fp2 | y^3 - gen2>;
+Fp6z<z> := PolynomialRing(Fp6);
+gen6 := Fp6!([0,1,0]);
+cpt := 1;
+while not(IsIrreducible(z^2 - gen6)) do
+    if cpt eq 0 then gen6+:=Fp6!([1,0,0]);end if;
+    if cpt eq 1 then gen6+:=Fp6!([0,1,0]);end if;
+    if cpt eq 2 then gen6+:=Fp6!([0,0,1]);end if;
+    cpt := (cpt+1) mod 3;
+end while;
+Fp12<w> := ext<Fp6 | z^2 - gen6>;
+
+for i in [0,1,2,3,4,5] do
+    elt := gen6^((p^i-1) div 6);
+    print(Coefficients(Polynomial(elt)));
+end for;
