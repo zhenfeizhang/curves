@@ -2233,7 +2233,7 @@ fn test_fq2_basics() {
 fn test_fq2_mul_nonresidue() {
     let mut rng = ark_std::test_rng();
 
-    let nqr = Fq2::new(Fq::one(), Fq::one());
+    let nqr = Fq2::new(Fq::from(3), Fq::from(2));
 
     for _ in 0..1000 {
         let mut a = Fq2::rand(&mut rng);

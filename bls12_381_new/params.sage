@@ -129,7 +129,7 @@ for k in range(6):
         x1 = 0
     else :
         x1 = L[1]
-    print("\t\t// Fp2(u+1)^(((q^{}) - 1) / 3)".format(k))
+    print("\t\t// Fp2(2*u+3)^(((q^{}) - 1) / 3)".format(k))
     print("\t\tfield_new!(Fq2,")
     print("\t\t\tfield_new!(Fq, \"{}\"),".format(x0))
     print("\t\t\tfield_new!(Fq, \"{}\"),".format(x1))
