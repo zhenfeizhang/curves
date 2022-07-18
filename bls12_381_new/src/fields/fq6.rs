@@ -91,10 +91,10 @@ impl Fp6Parameters for Fq6Parameters {
         let mut copy = *fe;
         let x = copy.c0;
         let y = copy.c1;
-		let x_2 = x.double();
-		let y_2 = y.double();
+        let x_2 = x.double();
+        let y_2 = y.double();
         copy.c0 = x_2 + x - y_2.double().double() - y_2;
-        copy.c1 = y_2+y + x_2;
+        copy.c1 = y_2 + y + x_2;
         copy
     }
 }
