@@ -29,6 +29,34 @@ impl BW6Parameters for Parameters {
         0x0,
         0x0,
     ]);
+    const X_MINUS_ONE: BigInteger = BigInteger([
+        0x8508c00000000000,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+    ]);
+    const X_MINUS_ONE_DIV_THREE: BigInteger = BigInteger([
+        0x2c58400000000000,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+    ]);
     /// `x` is positive.
     const X_IS_NEGATIVE: bool = false;
     // X+1
@@ -46,6 +74,8 @@ impl BW6Parameters for Parameters {
     ];
     const ATE_LOOP_COUNT_2_IS_NEGATIVE: bool = false;
     const TWIST_TYPE: TwistType = TwistType::M;
+    const H_T: i32 = 13;
+    const H_Y: i32 = 9;
     type Fp = Fq;
     type Fp3Params = Fq3Parameters;
     type Fp6Params = Fq6Parameters;

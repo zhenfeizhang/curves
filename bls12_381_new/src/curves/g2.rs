@@ -42,7 +42,6 @@ impl SWModelParameters for Parameters {
         246241851161470288,
     ];
 
-
     /// COFACTOR_INV = COFACTOR^{-1} mod r
     /// 32152196285116200311406820395469099503860990778606491159737426242298400787373
     #[rustfmt::skip]

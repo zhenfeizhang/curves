@@ -1,0 +1,38 @@
+p := 50282768576993852407494634308294841376983574838385858405447848583376065247544506093833501024756151257915195555055355085817082514603850271637792434072458297604453662538937558570183541064674323908560052492735693432884208755873415169;
+r := 2680159072491083434851704741251836777263822501214542753513157466943449604067937977626421502422550778814509982154753;
+Fp := GF(p);
+Fpxxyy<xx,yy> := PolynomialRing(Fp, 2);
+
+alpha := 11;
+pol := Resultant(yy^2-xx, xx^3 - alpha, xx);
+assert IsIrreducible(pol);
+
+Fpx<x> := PolynomialRing(Fp);
+
+Fp3<u> := ext<Fp| x^3-alpha>;
+Fp3y<y> := PolynomialRing(Fp3);
+
+Fp6<v> := ext<Fp3| y^2 - u>;
+
+// test final expo
+x := Random(Fp6);
+y := Power(x, (p^6-1) div r);
+z := y*y;
+
+print_arkworks_fp6 := function(x: Fp6) 
+    printf "= field_new!(Fq6, ";
+    for c3 in Coefficients(Polynomial(x)) do
+        printf "field_new!(Fq3, ";
+        for c in Coefficients(Polynomial(c3)) do
+            printf "field_new!(Fq, \"%o\"), ", c;
+        end for;
+        printf "),";
+    end for;
+    printf ");\n";
+    return 0;
+end function;
+
+_:= print_arkworks_fp6(y);
+_:= print_arkworks_fp6(z);
+assert Power(y, r) eq 1;
+assert Power(z,r) eq 1;

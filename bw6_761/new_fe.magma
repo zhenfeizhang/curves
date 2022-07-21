@@ -1,0 +1,200 @@
+p := 6891450384315732539396789682275657542479668912536150109513790160209623422243491736087683183289411687640864567753786613451161759120554247759349511699125301598951605099378508850372543631423596795951899700429969112842764913119068299;
+r := 258664426012969094010652733694893533536393512754914660539884262666720468348340822774968888139573360124440321458177;
+Fp := GF(p);
+Fpxxyy<xx,yy> := PolynomialRing(Fp, 2);
+
+alpha := -4;
+pol := Resultant(yy^2-xx, xx^3 - alpha, xx);
+assert IsIrreducible(pol);
+
+Fpx<x> := PolynomialRing(Fp);
+
+Fp3<u> := ext<Fp| x^3-alpha>;
+Fp3y<y> := PolynomialRing(Fp3);
+
+Fp6<v> := ext<Fp3| y^2 - u>;
+
+x := 0x8508c00000000001;
+
+print_arkworks_fp6 := function(x: Fp6) 
+    printf "= field_new!(Fq6, ";
+    for c3 in Coefficients(Polynomial(x)) do
+        printf "field_new!(Fq3, ";
+        for c in Coefficients(Polynomial(c3)) do
+            printf "field_new!(Fq, \"%o\"), ", c;
+        end for;
+        printf "),";
+    end for;
+    printf ");\n";
+    return 0;
+end function;
+
+h_t := 13;
+h_y := 9;
+
+d := x^4 - 4*x^3 + 7*x^2 - 6*x + 3;
+t :=80949648264912719408558363140637477264845294720710499478137287262712535938301461879813459410947;
+
+//
+// FIRST PART
+//
+first_chunk := function(X)
+    // (q^3-1)*(q+1)
+    X_inv := 1/X;
+    // elt_q3 = elt^(q^3)
+    X_q3 := Power(X, p^3);
+    // elt_q3_over_elt = elt^(q^3-1)
+    X_q3_over_X := X_q3 * X_inv;
+    // alpha = elt^((q^3-1) * q)
+    alpha := X_q3_over_X;
+    alpha := Power(alpha, p);
+    // beta = elt^((q^3-1)*(q+1)
+    return alpha * X_q3_over_X;
+end function;
+
+easy_part := function(X)
+    return Power(X, (p^3-1)*(p+1));
+end function;
+
+X := Power(Random(Fp6), (p^6-1) div r);
+assert first_chunk(X) eq easy_part(X);
+
+//
+// SECOND PART
+//
+second_chunk := function(X)
+    // A = m**(u-1)
+    // A = A**(u-1)
+    A := Power(Power(X, x-1), x-1);
+    // A = A * m.frobenius()        # A = m^((u-1)^2 + q)
+    A := A * Power(X, p);
+    // B = A**(u+1) * m.conjugate() # B = m**((u^3-u^2-u) + (u+1)*q)
+    B := Power(A, x-1) * Power(X, p^3);
+    // A = A**2 * A                 # A = m**(3*((u^2-2*u+1) + q))
+    A := A*A*A;
+    // C = B**((u-1)//3)
+    C := Power(B, (x-1) div 3);
+    // D = C**(u-1)
+    D := Power(C, x-1);
+    // E = (D**(u-1))**(u-1) * D             # B^((d-1)/3)
+    E := Power(Power(D, x-1), x-1) * D;
+    // D = D.conjugate()
+    D := Power(D, p^3);
+    // Fc = D * B
+    Fc := D*B;
+    // G = E**(u+1) * Fc
+    G := Power(E, x+1) * Fc;
+    // H = G * C                             # B^(t3/3)
+    H := G*C;
+    // I = (G * D)**(u+1) * Fc.conjugate()   # B^r
+    I := Power(G*D, x+1) * Power(Fc, p^3);
+    // d2 = (ht**2+3*hy**2)//4
+    d2 := (h_t^2+3*h_y^2) div 4;
+    // d1 = (ht+hy)//2
+    d1 := (h_t + h_y) div 2;
+    // J = H**d1 * E
+    J := Power(H, d1) * E;
+    // K = J**2 * J * B * I**d2
+    K := J*J*J*B*Power(I, d2);
+    return A*K;
+end function;
+
+hard_part := function(X)
+    return Power(X, (x+1) * Evaluate(CyclotomicPolynomial(6), p) div r);
+end function;
+
+X := easy_part(Power(Random(Fp6), (p^6-1) div r));
+assert second_chunk(X) eq hard_part(X);
+
+
+// exp_hard := function(ht, hy) 
+//     a3 := (x-1)^2+p;
+//     b3 := (x-1) * (a3 -1);
+//     h1 := (ht+hy) div 2;
+//     h2 := (ht^2+3*hy^2) div 4;
+//     return 3*a3 + b3 * (h2*r + 3*(h1*t div 3 + (d-1) div 3) + 1);
+// end function;
+
+// exp_hard_0 := function(ht, hy) 
+//     a0 := p-(x-1)^2-1;
+//     b0 := (x+1) * a0+1;
+//     h1 := (ht-hy) div 2;
+//     h2 := (ht^2+3*hy^2) div 4;
+//     return b0 * (h2 * r + 3*(h1*t div 3 + (d-1) div 3) +1) -3*a0;
+// end function;
+
+// hard_part := function(m, ht, hy)
+//     h1 := (ht+hy) div 2;
+//     h2 := (ht^2 + 3*hy^2) div 4;
+//     A := Power(m,p) * Power(Power(m, x-1), x-1);
+//     // error here in the paper : A replaced by m
+
+//     a3 := (x-1)^2 + p;
+//     assert A eq Power(m, a3);
+//     print "1";
+    
+//     B := Power(Power(m, p^3)*A, x+1);
+//     // error in the paper, it is `B := Power(m, p^6)* Power(A, x+1);`
+
+//     b3 := (x+1) * (a3 -1);
+//     assert B eq Power(m, b3);
+//     print "2";
+
+//     A := A^3;
+//     C := Power(B, (x-1) div 3);
+//     D := Power(C,x-1);
+//     E := Power(Power(D, x-1), x-1) * D;
+
+//     assert E eq Power(B, (d-1) div 3);
+//     print "3";
+
+//     D := Power(D, p^3);
+//     F := D*B;
+//     G := Power(E, x+1) * F;
+//     H := G*C;
+
+//     assert H eq Power(B, t div 3);
+//     print "4";
+
+//     I := Power(G*D,x+1) * Power(F, p^3);
+
+//     assert I eq Power(B, r);
+//     print "5";
+
+//     J := Power(H, h1)*E;
+
+//     assert J eq Power(B, t div 3  * h1 + (d-1) div 3);
+//     print "6";
+
+//     K := J^3*B*Power(I, h2);
+
+//     assert A*K eq Power(m, 3*a3 + b3 * (3 * (t div 3  * h1 + (d-1) div 3) + 1 + r*h2));
+//     //                     3*a3 + b3 * (h2*r + 3*(h1*t div 3 + (d-1) div 3) + 1);
+
+//     print "7";
+
+//     return A*K;
+// end function;
+
+// final_expo := function(x, ht, hy) 
+//     return hard_part(easy_part(x), ht,hy);
+// end function;
+
+// // assert Power(z, ((p^6-1) div r) * (x+1)) eq final_expo(z, ht,hy);
+
+// //assert Power(easy_part(z), exp_hard(ht,hy)) eq hard_part(easy_part(z), ht,hy);
+
+// // print (x+1) * Evaluate(CyclotomicPolynomial(6),p) div r;
+// // print exp_hard_0(ht,hy);
+
+// // assert Evaluate(CyclotomicPolynomial(6), t-1) eq 3 * r * (x^4-4*x^3+7*x^2-6*x+3);
+// // c := (ht^2+3*hy^2) div 4 * r + (ht+hy) div 2 * t + Evaluate(CyclotomicPolynomial(6), t-1) div (3*r) - ht;
+
+// // assert p+1-t eq c * r;
+
+// X := Power(Random(Fp6), (p^6-1) div r);
+// // pow_r := Power(Random(Fp6), r);
+// // Y := X*pow_r;
+// // assert final_expo(Y,ht,hy) eq Power(X, (x+1) * (p^6-1) div r);
+
+// assert first_chunk(X) eq easy_part(X);

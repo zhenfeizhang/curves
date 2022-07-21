@@ -9,7 +9,8 @@ pub struct Fq12Parameters;
 impl Fp12Parameters for Fq12Parameters {
     type Fp6Params = Fq6Parameters;
 
-    // this is a non square defining Fq12/Fq6, we need to of the form (0,1,0) because of the arkworks implementation
+    // this is a non square defining Fq12/Fq6, we need to of the form (0,1,0)
+    // because of the arkworks implementation
     const NONRESIDUE: Fq6 = field_new!(Fq6, FQ2_ZERO, FQ2_ONE, FQ2_ZERO);
 
     const FROBENIUS_COEFF_FP12_C1: &'static [Fq2] = &[

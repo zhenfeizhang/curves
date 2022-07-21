@@ -58,3 +58,9 @@ lto = "thin"
 incremental = true
 debug-assertions = true
 debug = true
+
+[patch.crates-io]
+ark-ff = { git = "https://github.com/simonmasson/algebra/", rev = "e2ea75c"}
+ark-ec = { git = "https://github.com/simonmasson/algebra/", rev = "e2ea75c"}
+ark-serialize = { git = "https://github.com/simonmasson/algebra/", rev = "e2ea75c"}
+ark-std = { git = "https://github.com/arkworks-rs/std/", rev = "2b3568f" }

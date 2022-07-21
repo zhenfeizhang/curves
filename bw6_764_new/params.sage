@@ -60,69 +60,104 @@ print64((T-1)//2)
 
 # Fq3
 print("FQ3")
-α = Fp(1)
-Fpx.<x> = Fp[]
-while not((x**3 - α).is_irreducible()):
-    α += 1
+# we choose α=11, see magma code for details
+α = Fp(11)
 
-ns = Fp(1)
-while ns.is_square():
-    ns+=1
-print(ns)
-#ns = Fp(11)
+# α = Fp(1)
+# Fpx.<x> = Fp[]
+# while not((x**3 - α).is_irreducible()):
+#     α += 1
 
 T = (p**3-1)//(1<<valuation(p**3-1,2))
 print("T_MINUS_ONE_DIV_2")
 print64((T-1)//2)
 
-print("QUADRATIC_NONRESIDUE_TO_T")
-print(ns**T)
-
-
+Fpx.<x> = Fp[]
 Fp3.<u> = GF(p**3, modulus = x**3-α)
 Fp3y.<y> = Fp3[]
 
-nsq = Fp3(u)
-if not((y**3-nsq).is_irreducible()):
-    nsq *= ns
-print(nsq)
-# nsq = 11*u
+for j in range(3):
+    print(u**((p**(3*j)-1)//3))
+for j in range(3):
+    print(u**((2*p**(3*j)-1)//3))
 
-print("FQ3")
-for i in range(3):
-    print(nsq**((p**(3*i)-1)//3))
-for i in range(3):
-    print(nsq**((2*p**(3*i)-1)//3))
-
-#Fq6
 print("FQ6")
-for i in range(6):
-    print(nsq**((p**(3*i)-1)//6))
+# we define Fp6 using `0,1,0`, see magma code and akrworks implem for details.
+nsq = u
+assert (y**3-nsq).is_irreducible()
+
+for j in range(6):
+    print(nsq**((p**(3*j)-1)//6))
 
 
 
-# G1
-Fr = GF(r)
-cof = E.order()//r
-print("COFACTOR")
-print64(cof)
-print("COFACTOR_INV")
-print(Fr(cof)**-1)
+# #Fq6
+# print("FQ6")
+# for i in range(6):
+#     print(nsq**((p**(3*i)-1)//6))
 
-# G2
-Fpx.<x> = Fp[]
-α = Fp(1)
-boo = True
-while not((x**6-α).is_irreducible()):
-    α = -α
-    if boo:
-        α+=1
-    boo = not(boo)
-E2 = EllipticCurve([0, E.a6() * α])
-assert E2.order()%r == 0
-cof2 = E2.order()//r
-print("COF2")
-print(cof2)
-inv_cof2 = 1/GF(r)(cof2)
-print("INV_COF2")
-print(inv_cof2)
+
+
+# # G1
+# Fr = GF(r)
+# cof = E.order()//r
+# print("COFACTOR")
+# print64(cof)
+# print("COFACTOR_INV")
+# print(Fr(cof)**-1)
+
+# # G2
+# Fpx.<x> = Fp[]
+# α = Fp(1)
+# boo = True
+# while not((x**6-α).is_irreducible()):
+#     α = -α
+#     if boo:
+#         α+=1
+#     boo = not(boo)
+# E2 = EllipticCurve([0, E.a6() * α])
+# assert E2.order()%r == 0
+# cof2 = E2.order()//r
+# print("COF2")
+# print(cof2)
+# inv_cof2 = 1/GF(r)(cof2)
+# print("INV_COF2")
+# print(inv_cof2)
+
+# t = cof2
+# while t>0 :
+#     print(t%(1<<64))
+#     t >>= 64
+
+
+
+def naf(E):
+    Z = []
+    while E>0:
+        if E%2 == 1:
+            Z.append(2-E%4)
+            E = E-Z[-1]
+        else:
+            Z.append(0)
+        E = E//2
+    return Z
+
+
+C.<x> = QQ[]
+main_q_x = (x**6 - 2*x**5 + 2 * x**3+x+1)/3
+main_r_x = x**4-x**2+1
+
+u = (main_q_x - r).roots()[0][0]
+
+# u2 = u**3 - u**2 - u
+
+# print(naf(u2))
+
+# now for BW6
+r_x = main_q_x
+t_x = x**5-3*x**4+3*x**3-x+3
+h_t = -4
+y_x = t_x/3
+h_y = -2
+p_x = ((t_x + h_t * r_x)**2 + 3 *(y_x + h_y * r_x)**2)/4
+assert p_x(u) == p

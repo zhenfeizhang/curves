@@ -6,7 +6,7 @@ use ark_ec::{
 use ark_ff::{
     field_new,
     fields::{Field, FpParameters, PrimeField, SquareRootField},
-    BigInteger, BigInteger384, Fp12Parameters, One, UniformRand, Zero, BigInteger256,
+    BigInteger, BigInteger256, BigInteger384, Fp12Parameters, One, UniformRand, Zero,
 };
 use ark_serialize::CanonicalSerialize;
 use ark_std::{rand::Rng, test_rng};
@@ -317,7 +317,6 @@ fn test_final_expo_magma() {
     let fe = <Bls12_381New as PairingEngine>::final_exponentiation(&y2).unwrap();
     assert_eq!(fe, expo);
 }
-
 
 #[test]
 fn test_bilinearity() {

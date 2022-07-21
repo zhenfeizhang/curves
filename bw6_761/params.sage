@@ -107,17 +107,50 @@ for i in range(6):
 
 
 
-# G1
-Fr = GF(r)
-cof = E.order()//r
-print("COFACTOR")
-print64(cof)
-print("COFACTOR_INV")
-print(Fr(cof)**-1)
+# # G1
+# Fr = GF(r)
+# cof = E.order()//r
+# print("COFACTOR")
+# print64(cof)
+# print("COFACTOR_INV")
+# print(Fr(cof)**-1)
 
-# G2
-cof2 = E2.order()//r 
-print("COFACTOR")
-print(cof2)
-print64(cof2)
-print(Fr(cof2)**-1)
+# # G2
+# cof2 = E2.order()//r 
+# print("COFACTOR")
+# print(cof2)
+# print64(cof2)
+# print(Fr(cof2)**-1)
+
+C.<x> = QQ[]
+main_q_x = (x**6 - 2*x**5 + 2 * x**3+x+1)/3
+main_r_x = x**4-x**2+1
+
+u = (main_q_x - r).roots()[0][0]
+
+u2 = u**3 - u**2 - u
+t=ZZ(u2)
+while t>0:
+    print(t%(1<<8))
+    t>>=8
+
+L = [
+    -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, 0,
+    1, 0, 0, 0, -1, 0, 0, -1, 0, 1, 0, -1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 1, 0, 1, 0, 0, 0, 1,
+    0, -1, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+]
+
+def naf(E):
+    Z = []
+    while E>0:
+        if E%2 == 1:
+            Z.append(2-E%4)
+            E = E-Z[-1]
+        else:
+            Z.append(0)
+        E = E//2
+    return Z

@@ -16,7 +16,35 @@ pub struct Parameters;
 
 impl BW6Parameters for Parameters {
     const X: BigInteger = BigInteger([
-        14154036274104631297,
+        0xc46d3d0000000001,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+    ]);
+    const X_MINUS_ONE: BigInteger = BigInteger([
+        0xc46d3d0000000000,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+        0x0,
+    ]);
+    const X_MINUS_ONE_DIV_THREE: BigInteger = BigInteger([
+        0x4179bf0000000000,
         0x0,
         0x0,
         0x0,
@@ -32,20 +60,22 @@ impl BW6Parameters for Parameters {
     /// `x` is positive.
     const X_IS_NEGATIVE: bool = false;
     // X+1
-    const ATE_LOOP_COUNT_1: &'static [u64] = &[14154036274104631298];
+    const ATE_LOOP_COUNT_1: &'static [u64] = &[0xc46d3d0000000002];
     const ATE_LOOP_COUNT_1_IS_NEGATIVE: bool = false;
     // X^3-X^2-X
     const ATE_LOOP_COUNT_2: &'static [i8] = &[
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0,
-        0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0,
-        0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1,
-        0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0,
-        0, 1, 0, 1, 1, 1, 0,
+        -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0,
+        0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0,
+        1, 0, 1, 0, 0, 1, 0, -1, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0, -1, 0, 0, 0,
+        -1, 0, 1, 0, 1, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, -1, 0, -1, 0, 0, 1, 0, 1, 0, 0, 0, -1, 0, 1,
+        0, 1, 0, 0, 1, 0, -1, 0, 0, 1, 0, -1, 0, 0, 1,
     ];
     const ATE_LOOP_COUNT_2_IS_NEGATIVE: bool = false;
     const TWIST_TYPE: TwistType = TwistType::M;
+    const H_T: i32 = -4;
+    const H_Y: i32 = -2;
     type Fp = Fq;
     type Fp3Params = Fq3Parameters;
     type Fp6Params = Fq6Parameters;
@@ -53,7 +83,7 @@ impl BW6Parameters for Parameters {
     type G2Parameters = g2::Parameters;
 }
 
-pub type BW6_761 = BW6<Parameters>;
+pub type BW6_764New = BW6<Parameters>;
 
 pub type G1Affine = bw6::G1Affine<Parameters>;
 pub type G1Projective = bw6::G1Projective<Parameters>;

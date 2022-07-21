@@ -17,9 +17,9 @@ impl Fp3Parameters for Fq3Parameters {
     type Fp = Fq;
 
     /// NONRESIDUE = 2
-    // Fq3 = Fq\[u\]/u^3-2
+    // Fq3 = Fq\[u\]/u^3-11
     #[rustfmt::skip]
-    const NONRESIDUE: Fq = field_new!(Fq, "2");
+    const NONRESIDUE: Fq = field_new!(Fq, "11");
 
     // (MODULUS^3 - 1) % 2^TWO_ADICITY == 0
     const TWO_ADICITY: u32 = 42;
@@ -65,8 +65,10 @@ impl Fp3Parameters for Fq3Parameters {
         0x47,
     ];
 
-    // NONRESIDUE = 11 is a non square in Fq
+    // NONRESIDUE = 11 is a non cube in Fq
     // NONRESIDUE^T % q
+    // weird to use "quadratic" here...
+    // is it really useful?
     #[rustfmt::skip]
     const QUADRATIC_NONRESIDUE_TO_T: (Fq, Fq, Fq) = (
         field_new!(Fq, "37513713786584893459849309815732044566009703650879219127228968382592080859386587986081006239459392632414638528231155748280122555799664830067376560050582790071978491499523711512909265111384994907396619080277624436087766360169273803"),
@@ -74,7 +76,7 @@ impl Fp3Parameters for Fq3Parameters {
         FQ_ZERO,
     );
 
-    // NQR ^ (MODULUS^i - 1)/3, i=0,1,2 with NQR = 11*u
+    // NONRESIDUE ^ (MODULUS^i - 1)/3, i=0,1,2 with NONRESIDUE = (0,1,0)?????
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP3_C1: &'static [Fq] = &[
         FQ_ONE,
@@ -82,7 +84,7 @@ impl Fp3Parameters for Fq3Parameters {
         field_new!(Fq, "50282768576993852396837016734785827995873736060526044576695150098366033779477101935690773566664707984443383101531713651773202185700462399106346600290809556774367272997391698519046257613281472927139474876682186129147018051720314882"),
     ];
 
-    // NQR ^ (2*MODULUS^i - 2)/3, i=0,1,2 with NQR = 11*u
+    // NQR ^ (2*MODULUS^i - 2)/3, i=0,1,2 with NQR = (0,1,0)?????
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP3_C2: &'static [Fq] = &[
         FQ_ONE,
@@ -92,6 +94,6 @@ impl Fp3Parameters for Fq3Parameters {
 
     #[inline(always)]
     fn mul_fp_by_nonresidue(fe: &Self::Fp) -> Self::Fp {
-        fe.double()
+        fe.double().double().double() + fe.double() + fe
     }
 }
