@@ -9,7 +9,8 @@ pub struct Fq12Parameters;
 impl Fp12Parameters for Fq12Parameters {
     type Fp6Params = Fq6Parameters;
 
-    // this is a non square defining Fq12/Fq6, we need it in the form (0,1,0) for this implementation
+    // this is a non square defining Fq12/Fq6, we need it in the form (0,1,0) for
+    // this implementation
     const NONRESIDUE: Fq6 = field_new!(Fq6, FQ2_ZERO, FQ2_ONE, FQ2_ZERO);
 
     const FROBENIUS_COEFF_FP12_C1: &'static [Fq2] = &[
@@ -74,5 +75,4 @@ impl Fp12Parameters for Fq12Parameters {
 		field_new!(Fq, "59614165775103006672119154451576360814479203406173853517272494918501729949675212875467123273745354151749938909022"),
 	),
     ];
-
 }

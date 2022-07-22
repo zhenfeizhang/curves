@@ -14,7 +14,8 @@ impl Fp2Parameters for Fq2Parameters {
     const NONRESIDUE: Fq = field_new!(Fq, "-5");
 
     /// QUADRATIC_NONRESIDUE = 3+2*u
-    /// It is actually a non-cube defining Fp6/Fp3 (probably useless but needed in v0.3.0.)
+    /// It is actually a non-cube defining Fp6/Fp3 (probably useless but needed in
+    /// v0.3.0.)
     #[rustfmt::skip]
     const QUADRATIC_NONRESIDUE: (Fq, Fq) = (
         field_new!(Fq, "3"),

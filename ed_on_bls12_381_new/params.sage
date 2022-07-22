@@ -1,9 +1,6 @@
 p = 40134810535214015562426085132763902269106966834552711290100314126475667177473
 r = 1114855848200389321178502364798997285263996944004370985025370127112229300857
 
-print(valuation(p-1,2))
-print(valuation(r-1,2))
-
 def print64(x):
     y=int(x)
     print('[')
@@ -24,28 +21,6 @@ M = 1<<64
 while M < r :
     M *= 1<<64
 R = Fr(M)
-print("2-adic Root of Unity: %d " % two_adic_root_of_unity)
-print("TWOADICROOTOFUNITY")
-print64(two_adic_root_of_unity*R%r)
-print("MODULUS")
-print64(r)
-print("MODULUSBITS")
-print(r.nbits())
-print("R")
-print64(R)
-print("R2")
-print64(R**2)
-print("INV")
-print64(-Integers(1<<64)(r)**-1)
-print("GENERATOR")
-print64((int(g)*int(R))%r)
-print("MODULUS_MINUS_ONE_DIV_TWO")
-print64((r-1)//2)
-print("T")
-print64(trace)
-print("T_MINUS_ONE_DIV_TWO")
-print64((trace-1)//2)
-
 
 # weierstrass
 Fp = GF(p)
@@ -94,21 +69,13 @@ assert Ate * xte**2 + yte**2 == 1 + Dte*xte**2*yte**2
 new_Am = 2*(Ate + Dte) / (Ate - Dte)
 new_Bm = 4 / (Ate-Dte)
 
-print("TE COEFFICIENTS")
-print(Ate)
-print(Dte)
-
-print("MONTGOMERY COEFFICIENTS")
-print(new_Am)
-print(new_Bm)
-
 cof = 36
 cof_inv = Fr(36)**-1
-print("COFACTOR_INV")
-print(cof_inv)
 
 Fp2.<u> = GF(p**2)
 E2 = E.change_ring(Fp2)
+
+# GLV endomorphism (WIP)
 
 for (x7, _) in E2.division_polynomial(7).roots():
     P7 = E2.lift_x(x7)
