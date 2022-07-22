@@ -9,7 +9,8 @@ use ark_algebra_test_templates::{curves::*, groups::*};
 fn test_projective_curve() {
     curve_tests::<EdwardsProjective>();
 
-    edwards_tests::<EdwardsParameters>();
+    edwards_tests::<Parameters>();
+    sw_tests::<Parameters>();
 }
 
 #[test]
@@ -57,5 +58,5 @@ fn test_conversion() {
 
 #[test]
 fn test_montgomery_conversion() {
-    montgomery_conversion_test::<EdwardsParameters>();
+    montgomery_conversion_test::<Parameters>();
 }

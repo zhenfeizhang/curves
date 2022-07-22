@@ -28,8 +28,16 @@ Aw = Fp(401348105352140155624260851327639022691069668345527112901003141264756155
 Bw = Fp(175774110750)
 E  = EllipticCurve([Aw,Bw])
 assert E.order() % r == 0
-P = 36*E.random_point()
-assert not(P.is_zero())
+
+# Generator of the subgroup
+x = Fp(0)
+generator = E(0)
+while generator.is_zero() or (r*generator != 0):
+    while not((x**3 + Aw * x + Bw).is_square()):
+        x+=1
+    P = E.lift_x(x)
+    generator = 36 * P
+P = generator
 
 # Montgomery
 α = E.division_polynomial(2).roots()[0][0]
