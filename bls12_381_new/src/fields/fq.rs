@@ -14,6 +14,7 @@ impl FftParameters for FqParameters {
 
     const TWO_ADICITY: u32 = 40;
 
+    // TWO_ADIC_ROOT_OF_UNITY is an element of order 2^TWO_ADICITY in Fq
     #[rustfmt::skip]
     const TWO_ADIC_ROOT_OF_UNITY: BigInteger = BigInteger([
         0xfe595c6422d3a270,
@@ -43,6 +44,7 @@ impl FpParameters for FqParameters {
     const REPR_SHAVE_BITS: u32 = 3;
 
     /// R = 1879779181519311124355173722617898923386224253461848118764088867037427314546078924644365220969204737403488240140274
+    // The Montgomery multiplicator
     #[rustfmt::skip]
     const R: BigInteger = BigInteger([
         0x4206a9fffffffff2,
@@ -53,6 +55,7 @@ impl FpParameters for FqParameters {
         0xc36926d21f2cbf5,
     ]);
 
+    // R2 = R^2
     #[rustfmt::skip]
     const R2: BigInteger = BigInteger([
         0x5993dfaf9da689f,
@@ -63,21 +66,23 @@ impl FpParameters for FqParameters {
         0xcd13c944264e05,
     ]);
 
+    //  -1/2⁶⁴ mod q
     const INV: u64 = 0xc46d3cffffffffff;
 
-    /// GENERATOR = ??
-    /// Encoded in Montgomery form,so the value is
-    /// ? * R % q = ?
+    /// GENERATOR = 10
+    /// Encoded in Montgomery form:
+    /// 10 * R % q = 36678307755527199589804037416131793015485026116681913048786401770125916985223403058701692734191922333312526319469
     #[rustfmt::skip]
     const GENERATOR: BigInteger = BigInteger([
-        0x7730d71524c1f7d1,
-        0xf0afdb7b15fbc8be,
-        0x2092ef0f63ca8dd0,
-        0x12e175a3783dedb1,
-        0x1bda12e782b54d82,
-        0x1ef96b691abfb5,
+        0x3545f8ffffffff6d, 
+        0xfce2cb0ae5c6ff8f, 
+        0x53847a0cabe394d9, 
+        0xdd017de7c44ae599, 
+        0xa3b45abdf6f91148, 
+        0x3d0179e4755d8c, 
     ]);
 
+    // (p-1) / 2 = 1340079536245541717425852370625918388631911250607271376756578733471724802033968988813210751211275389407254991077376
     #[rustfmt::skip]
     const MODULUS_MINUS_ONE_DIV_TWO: BigInteger = BigInteger([
         0x62369e8000000000,
@@ -90,6 +95,7 @@ impl FpParameters for FqParameters {
 
     /// T and T_MINUS_ONE_DIV_TWO,where MODULUS - 1 = 2^S * T
     /// For T coprime to 2
+    // T = 2437590476339285882979042745548064683374670950083366509273362195875460751329172105785275109540226166077
     #[rustfmt::skip]
     const T: BigInteger = BigInteger([
         0xac55830000c46d3d,
@@ -100,6 +106,7 @@ impl FpParameters for FqParameters {
         0x1169d0,
     ]);
 
+    // (T-1) / 2 = 1218795238169642941489521372774032341687335475041683254636681097937730375664586052892637554770113083038
     #[rustfmt::skip]
     const T_MINUS_ONE_DIV_TWO: BigInteger = BigInteger([
         0x562ac1800062369e,

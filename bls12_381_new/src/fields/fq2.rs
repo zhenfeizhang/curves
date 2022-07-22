@@ -14,8 +14,7 @@ impl Fp2Parameters for Fq2Parameters {
     const NONRESIDUE: Fq = field_new!(Fq, "-5");
 
     /// QUADRATIC_NONRESIDUE = 3+2*u
-    // it is actually a non-cube... the name is not well chosen. and it defines Fq6
-    // / Fq2 I don't think this value is useful here...
+    /// It is actually a non-cube defining Fp6/Fp3 (probably useless but needed in v0.3.0.)
     #[rustfmt::skip]
     const QUADRATIC_NONRESIDUE: (Fq, Fq) = (
         field_new!(Fq, "3"),
@@ -23,7 +22,6 @@ impl Fp2Parameters for Fq2Parameters {
     );
 
     /// Coefficients for the Frobenius automorphism.
-    // these are NONRESIDUE**((q^j-1)/2)
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP2_C1: &'static [Fq] = &[
         // Fq(-5)**(((q^0) - 1) / 2)
@@ -34,6 +32,7 @@ impl Fp2Parameters for Fq2Parameters {
 
     #[inline(always)]
     fn mul_fp_by_nonresidue(fe: &Self::Fp) -> Self::Fp {
+        // return -5 * fe
         let original = fe;
         let mut fe = -fe.double();
         fe.double_in_place();

@@ -20,7 +20,7 @@ impl SWModelParameters for Parameters {
     /// COEFF_A = 0
     const COEFF_A: Fq = field_new!(Fq, "0");
 
-    /// COEFF_B = 4
+    /// COEFF_B = 1
     #[rustfmt::skip]
     const COEFF_B: Fq = field_new!(Fq, "1");
 

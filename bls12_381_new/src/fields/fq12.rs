@@ -9,8 +9,7 @@ pub struct Fq12Parameters;
 impl Fp12Parameters for Fq12Parameters {
     type Fp6Params = Fq6Parameters;
 
-    // this is a non square defining Fq12/Fq6, we need to of the form (0,1,0)
-    // because of the arkworks implementation
+    // this is a non square defining Fq12/Fq6, we need it in the form (0,1,0) for this implementation
     const NONRESIDUE: Fq6 = field_new!(Fq6, FQ2_ZERO, FQ2_ONE, FQ2_ZERO);
 
     const FROBENIUS_COEFF_FP12_C1: &'static [Fq2] = &[
@@ -76,26 +75,4 @@ impl Fp12Parameters for Fq12Parameters {
 	),
     ];
 
-    // /// Multiply this element by the nonresidue 2+3u+2u².
-    // fn mul_fp6_by_nonresidue(fe: &Fq6) -> Fq6 {
-
-    // 	Self::NONRESIDUE * fe
-    // 	// // (x+yu + zu²) * (2 + 3u + 2u²) = 2x + 3xu + 2xu² + 2yu + 3yu² + 2yu³ +
-    // 2zu² + 3zu³ + 2zu³ 	// //                               =
-    // (2x+(2y+5z)(1+v)) + (3x+2y)u + (2x+3y+2z)u²     // let mut copy = *fe;
-    //     // let x = copy.c0;
-    //     // let y = copy.c1;
-    // 	// let z = copy.c2;
-    // 	// let x_2 = x.double();
-    // 	// let x_3 = x_2 + x;
-    // 	// let y_2 = y.double();
-    // 	// let y_3 = y_2 + y;
-    // 	// let z_2 = z.double();
-    // 	// let z_5 = z_2.double() + z_2;
-
-    //     // copy.c0 = x_2 + Fq6Parameters::mul_fp2_by_nonresidue(&(y_2 + z_5));
-    //     // copy.c1 = x_3+y_2;
-    // 	// copy.c2 = x_2 + y_3 + z_2;
-    //     // copy
-    // }
 }

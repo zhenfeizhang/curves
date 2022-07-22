@@ -17,7 +17,6 @@ impl Fp6Parameters for Fq6Parameters {
 		field_new!(Fq, "2"),
     );
 
-    // these are NONRESIDUE^((p^j-1)/3) for j < 6
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP6_C1: &'static [Fq2] = &[
 		// Fp2(2*u+3)^(((q^0) - 1) / 3)
@@ -52,7 +51,6 @@ impl Fp6Parameters for Fq6Parameters {
 		),
     ];
 
-    // these are NONRESIDUE^((2*p^j-1)/3) for j < 6
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP6_C2: &'static [Fq2] = &[
 		// Fp2(2*u+3)^(((2q^0) - 2) / 3)
