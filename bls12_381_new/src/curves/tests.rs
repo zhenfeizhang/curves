@@ -27,6 +27,7 @@ fn test_g1_projective_curve() {
     curve_tests::<G1Projective>();
 
     sw_tests::<g1::Parameters>();
+    edwards_tests::<g1::Parameters>();
 }
 
 #[test]
