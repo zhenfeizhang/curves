@@ -44,6 +44,7 @@ impl TEModelParameters for EdwardsParameters {
     /// Multiplication by `a` is a multiplication by 5.
     #[inline(always)]
     fn mul_by_a(elem: &Self::BaseField) -> Self::BaseField {
+        // return 5*elem
         let t = (*elem).double().double();
         t + *elem
     }

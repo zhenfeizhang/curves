@@ -16,6 +16,9 @@ impl FftParameters for FrParameters {
     #[rustfmt::skip]
     // 2^3-th root of unity = GENERATOR ^ T =
     // 29180994090598693311887686510943151134939632683795886146282286790774607395
+    // represented in Montgomery representation
+    // GENERATOR ^ T * R % q =
+    // 184876279233171354607023484706228756414603643739074403084986775692900093042
     const TWO_ADIC_ROOT_OF_UNITY: BigInteger = BigInteger([
         0x774dab031cfccc72,
         0x34fefb80d7f23bde,
@@ -39,6 +42,7 @@ impl FpParameters for FrParameters {
 
     const REPR_SHAVE_BITS: u32 = 6;
 
+    // R = 961936872676095342185241434391187471078299433190352581844460915353511651665
     #[rustfmt::skip]
     const R: BigInteger = BigInteger([
         0xd70e74a65c65e951,
@@ -47,6 +51,8 @@ impl FpParameters for FrParameters {
         0x2206fdda5a3e2ea,
     ]);
 
+    // R2 = R^2 =
+    // 135119785518099739587603646013875297644837167035153369810067176280917753424
     #[rustfmt::skip]
     const R2: BigInteger = BigInteger([
         0x9fbfffb8f1773e50,
@@ -55,9 +61,12 @@ impl FpParameters for FrParameters {
         0x4c799f652dfd88,
     ]);
 
+    // INV = -1/2⁶⁴ mod q
     const INV: u64 = 0xc9164276ddb4e037;
 
-    //
+    // GENERATOR = 10 is represented in Montgomery form
+    // 10 * R % q =
+    // 700521941157838852424395425519896428671018779868557938241648136637282109794
     #[rustfmt::skip]
     const GENERATOR: BigInteger = BigInteger([
         0xe22451f76781c962,
@@ -66,6 +75,7 @@ impl FpParameters for FrParameters {
         0x18c7b3aeda7c97d,
     ]);
 
+    // (r-1)/2 = 557427924100194660589251182399498642631998472002185492512685063556114650428
     #[rustfmt::skip]
     const MODULUS_MINUS_ONE_DIV_TWO: BigInteger = BigInteger([
         0x4846c3c88347953c,
@@ -74,6 +84,8 @@ impl FpParameters for FrParameters {
         0x13b7e36d8abf13a,
     ]);
 
+    // T = (r-1) / 2^TWO_ADICITY =
+    // 139356981025048665147312795599874660657999618000546373128171265889028662607
     const T: BigInteger = BigInteger([
         0x5211b0f220d1e54f,
         0xfb4748c925e1516e,
@@ -81,6 +93,8 @@ impl FpParameters for FrParameters {
         0x4edf8db62afc4e,
     ]);
 
+    // (T-1) / 2 =
+    // 69678490512524332573656397799937330328999809000273186564085632944514331303
     const T_MINUS_ONE_DIV_TWO: BigInteger = BigInteger([
         0x2908d8791068f2a7,
         0x7da3a46492f0a8b7,

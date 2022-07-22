@@ -13,24 +13,6 @@ def print64(x):
     print(']')
 
 Fr = GF(r)
-# Fr
-# generator = Fr(0);
-# for i in range(0, 20):
-#     i = Fr(i);
-#     neg_i = Fr(-i)
-#     if not(i.is_primitive_root() or neg_i.is_primitive_root()):
-#         continue
-#     elif i.is_primitive_root():
-#         assert(i.is_primitive_root());
-#         print("Generator: %d" % i)
-#         generator = i
-#         break
-#     else:
-#         assert(neg_i.is_primitive_root());
-#         print("Generator: %d" % neg_i)
-#         generator = neg_i
-#         break
-
 g = Fr(10)
 while g.multiplicative_order() != r-1:
     g += 1
