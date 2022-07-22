@@ -16,7 +16,6 @@ def print64(x):
         y >>= 64
     print(']')
 
-from re import U
 from sage.rings.factorint import factor_trial_division
 partial_facto = factor_trial_division(p-1, 1<<20)
 def is_generator(g):
@@ -53,7 +52,7 @@ print64((g*R)%p)
 print("MODULUS_MINUS_ONE_DIV_TWO")
 print64((p-1)//2)
 print("T")
-T = (p-1)//(1<<valuation(p-1,2))
+T = (p-1)//(1<<two_adicity)
 print64(T)
 print("T_MINUS_ONE_DIV_TWO")
 print64((T-1)//2)
@@ -98,13 +97,13 @@ for j in range(6):
 
 
 
-# # G1
-# Fr = GF(r)
-# cof = E.order()//r
-# print("COFACTOR")
-# print64(cof)
-# print("COFACTOR_INV")
-# print(Fr(cof)**-1)
+# G1
+Fr = GF(r)
+cof = E.order()//r
+print("COFACTOR")
+print64(cof)
+print("COFACTOR_INV")
+print(Fr(cof)**-1)
 
 # # G2
 # Fpx.<x> = Fp[]

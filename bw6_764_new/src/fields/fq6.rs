@@ -20,10 +20,10 @@ impl Fp6Parameters for Fq6Parameters {
         FQ_ZERO,
     );
 
-    // Fp3/Fp defined with u = sqrt[3](11)
-    // Fp6/Fp2 defined with v = sqrt(u)
-    // so Fp6 / Fp defined with sqrt[6](11) = 11**(p-1)/6
-    // these are the Fp(11)**(p**j-1)//6
+    // Fp(11) ^ (MODULUS^i - 1)/6
+    // also equals
+    // NONRESIDUE ^ (p^i-1)/2
+    // because 11^(p^i-1)/6 = sqrt[3](11)^(p^i-1)/2 = NONRESIDUE^(p^i-1)/2
     #[rustfmt::skip]
     const FROBENIUS_COEFF_FP6_C1: &'static [Fq] = &[
         field_new!(Fq, "1"),

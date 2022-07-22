@@ -46,6 +46,7 @@ impl SWModelParameters for Parameters {
     /// AFFINE_GENERATOR_COEFFS = (G2_GENERATOR_X, G2_GENERATOR_Y)
     const AFFINE_GENERATOR_COEFFS: (Self::BaseField, Self::BaseField) =
         (G2_GENERATOR_X, G2_GENERATOR_Y);
+
     #[inline(always)]
     fn mul_by_a(_elem: &Self::BaseField) -> Self::BaseField {
         use ark_ff::Zero;

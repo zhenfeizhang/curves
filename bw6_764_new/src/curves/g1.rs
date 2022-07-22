@@ -3,7 +3,7 @@ use ark_ec::{
     models::{ModelParameters, SWModelParameters},
     short_weierstrass_jacobian::{GroupAffine, GroupProjective},
 };
-use ark_ff::field_new;
+use ark_ff::{field_new, Zero};
 
 pub type G1Affine = GroupAffine<Parameters>;
 pub type G1Projective = GroupProjective<Parameters>;
@@ -19,10 +19,9 @@ impl ModelParameters for Parameters {
 impl SWModelParameters for Parameters {
     /// COEFF_A = 0
     #[rustfmt::skip]
-
     const COEFF_A: Fq = field_new!(Fq, "0");
 
-    /// COEFF_B = -1
+    /// COEFF_B = 3
     #[rustfmt::skip]
     const COEFF_B: Fq = field_new!(Fq, "3");
 
@@ -46,9 +45,9 @@ impl SWModelParameters for Parameters {
     /// AFFINE_GENERATOR_COEFFS = (G1_GENERATOR_X, G1_GENERATOR_Y)
     const AFFINE_GENERATOR_COEFFS: (Self::BaseField, Self::BaseField) =
         (G1_GENERATOR_X, G1_GENERATOR_Y);
+
     #[inline(always)]
     fn mul_by_a(_elem: &Self::BaseField) -> Self::BaseField {
-        use ark_ff::Zero;
         Self::BaseField::zero()
     }
 }
