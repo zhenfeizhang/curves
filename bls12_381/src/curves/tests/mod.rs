@@ -1,3 +1,5 @@
+pub(crate) mod ind_hash_test_vectors;
+
 use ark_algebra_test_templates::*;
 use ark_ec::{AffineRepr, CurveGroup, Group};
 use ark_ff::{fields::Field, One, UniformRand, Zero};

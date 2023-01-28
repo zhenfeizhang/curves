@@ -26,6 +26,8 @@ ark-algebra-bench-templates = { version = "0.4.0", default-features = false }
 ark-curve-constraint-tests = { path = "../curve-constraint-tests", default-features = false }
 sha2 = { version = "0.10", default-features = false }
 
+itoa = "1.0.2"
+
 [features]
 default = [ "curve" ]
 std = [ "ark-std/std", "ark-ff/std", "ark-ec/std" ]
