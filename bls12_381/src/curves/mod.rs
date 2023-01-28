@@ -8,6 +8,7 @@ pub(crate) mod util;
 
 mod g1_swu_iso;
 mod g2_swu_iso;
+mod g1_ind_hash;
 
 #[cfg(test)]
 mod tests;

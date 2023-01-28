@@ -10,6 +10,7 @@ pub mod g2;
 
 mod g1_swu_iso;
 mod g2_swu_iso;
+mod g1_ind_hash;
 
 #[cfg(test)]
 mod tests;

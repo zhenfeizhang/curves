@@ -1,3 +1,5 @@
+pub(crate) mod ind_hash_test_vectors;
+
 use crate::{Bls12_377, G1Projective, G2Projective};
 use ark_algebra_test_templates::*;
 
